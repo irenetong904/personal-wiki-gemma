@@ -1,0 +1,4 @@
+#!/bin/sh
+# Launcher: runs the harness with the project's virtualenv.
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec "$DIR/.venv/bin/python" -m wikicli.cli "$@"
