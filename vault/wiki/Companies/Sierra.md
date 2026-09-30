@@ -5,7 +5,7 @@ original_file: "raw/Sierra - company-research.md"
 sha256: "766664f027fff7a19987341b1703d53ee9b5e181cd2a4769398c96f11f5edc77"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T23:03:41"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---

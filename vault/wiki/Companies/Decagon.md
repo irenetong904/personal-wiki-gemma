@@ -5,7 +5,7 @@ original_file: "raw/Decagon - company-research.md"
 sha256: "d888f2027a4c1906985b0d60605bde84075d6deb582f777457872a58b6ba38f5"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T22:52:24"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---

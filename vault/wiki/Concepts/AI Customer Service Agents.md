@@ -3,7 +3,7 @@ type: "concept-note"
 concept_id: "ai customer service agent"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T23:04:00"
-reviewed: False
+reviewed: true
 tags:
   - "concept"
 ---

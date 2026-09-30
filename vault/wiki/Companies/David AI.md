@@ -5,7 +5,7 @@ original_file: "raw/David AI - company-research.md"
 sha256: "834ca164f03abe651d6c54a97022549eca38d16996f724704c02daa7a81d84c2"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T22:50:39"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---

@@ -5,7 +5,7 @@ original_file: "raw/ClickHouse - company-research.md"
 sha256: "60b681bad292769513503eb1c1b23db86178fcd182db9f95b1327ed0785ebe4a"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T22:49:23"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---

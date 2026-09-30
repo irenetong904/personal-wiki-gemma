@@ -5,7 +5,7 @@ original_file: "raw/Clay - company-research.md"
 sha256: "4ef7519e28079f90f9913bbdd056b8a4eb16811798e3155d5a0721959ab1f766"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T22:48:50"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---

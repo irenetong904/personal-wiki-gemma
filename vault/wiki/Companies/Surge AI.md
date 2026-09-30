@@ -5,7 +5,7 @@ original_file: "raw/Surge AI - company-research.md"
 sha256: "6df1783e6fa31efb6f80a8bd67de754a4adeb135a7394e86a1d126fde4b76fcf"
 generated_by: "gemma4:e4b"
 ingested_at: "2026-09-29T22:54:28"
-reviewed: False
+reviewed: true
 tags:
   - "companies"
 ---
