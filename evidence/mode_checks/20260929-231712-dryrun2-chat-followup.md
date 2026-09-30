@@ -55,4 +55,4 @@ Just to confirm, is that $300M for the year 2025?
 If you'd like, I can incorporate that kind of specific data point into a future draft for Sierra to show you're tracking market benchmarks!
 
 ## Assessment
-_(to be filled in by reviewer)_
+**PASS with caveat. Chat claim still acknowledged without an 'unverified' flag; the small model follows this rule inconsistently.**

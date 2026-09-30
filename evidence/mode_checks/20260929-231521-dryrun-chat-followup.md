@@ -56,4 +56,4 @@ Thanks for sharing that detail! I've noted that **Decagon's ARR was $300M in 202
 Is there anything else I can help you structure or summarize regarding Decagon or any of the other startups right now?
 
 ## Assessment
-_(to be filled in by reviewer)_
+**PASS with caveat. Follow-up used conversation; the chat claim was 'noted' without flagging it as unverified (persona rule added).**
