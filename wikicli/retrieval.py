@@ -18,7 +18,7 @@ from . import config
 STOPWORDS = set("""a an and are as at be by did do does for from has have how i in is it its of on or
 that the this to was were what when where which who why will with my me you your we our about can""".split())
 RRF_K = 60           # standard Reciprocal Rank Fusion constant
-MAX_PER_SOURCE = 2   # diversity: one long file cannot fill every slot (v1 Q3 failure)
+MAX_PER_SOURCE = 3   # diversity: one long file cannot fill every slot (v1 Q3); 2 was too strict (v2 Q1)
 MIN_CHARS = 40       # drop separator-only passages such as "---"
 
 
@@ -75,10 +75,10 @@ def describe() -> str:
     return _last_method
 
 
-def search(query: str, k: int = config.TOP_K, kinds=("raw", "wiki")) -> list[dict]:
+def search(query: str, k: int = config.TOP_K, kinds=("raw", "wiki"), paths: set | None = None) -> list[dict]:
     global _last_method
     all_chunks = load_chunks()
-    idx = [i for i, c in enumerate(all_chunks) if c["kind"] in kinds]
+    idx = [i for i, c in enumerate(all_chunks) if c["kind"] in kinds and (paths is None or c["path"] in paths)]
     chunks = [all_chunks[i] for i in idx]
     q = tokenize(query)
     if not chunks or not q:
@@ -101,9 +101,9 @@ def search(query: str, k: int = config.TOP_K, kinds=("raw", "wiki")) -> list[dic
     else:
         _last_method = f"hybrid: BM25 + {config.EMBED_MODEL} cosine, reciprocal rank fusion"
         fused = np.zeros(len(chunks))
-        for scores in (kw, cos):
+        for scores, weight in ((kw, 1.0), (cos, config.DENSE_WEIGHT)):
             for rank, i in enumerate(np.argsort(-scores)):
-                fused[i] += 1.0 / (RRF_K + rank + 1)
+                fused[i] += weight / (RRF_K + rank + 1)
 
     results, per_source = [], {}
     for i in np.argsort(-fused):

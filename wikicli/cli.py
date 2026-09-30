@@ -39,6 +39,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("query")
     s.add_argument("-k", type=int, default=config.TOP_K, help="number of passages")
     s.add_argument("--save", action="store_true", help="save results under evidence/search/")
+    s.add_argument("--include-wiki", action="store_true", help="also search generated wiki summaries (default: originals only)")
 
     s = sub.add_parser("ask", help="grounded factual answer with citations")
     s.add_argument("question")
@@ -72,7 +73,7 @@ def main(argv=None) -> int:
             ingest.run(Path(args.path), force=args.force)
         elif args.cmd == "search":
             from .modes import search
-            search.run(args.query, k=args.k, save=args.save)
+            search.run(args.query, k=args.k, save=args.save, include_wiki=args.include_wiki)
         elif args.cmd == "ask":
             from .modes import ask
             ask.run(args.question, name=args.name)

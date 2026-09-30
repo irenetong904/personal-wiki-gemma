@@ -1,0 +1,70 @@
+# Re-ingestion duplicate check  2026-09-29 23:03
+
+## Before
+wiki/Companies/Clay.md
+wiki/Companies/ClickHouse.md
+wiki/Companies/David AI.md
+wiki/Companies/Decagon.md
+wiki/Companies/Harvey AI.md
+wiki/Companies/Sierra.md
+wiki/Companies/Surge AI.md
+wiki/Concepts/AI Customer Service Agents.md
+wiki/Concepts/AI Evaluation and Testing.md
+wiki/Concepts/AI Training Data.md
+wiki/Concepts/Agent Building Platforms.md
+wiki/Concepts/Enterprise Trust and Compliance.md
+wiki/Concepts/Pricing and Business Models.md
+
+## Run A: ./wiki ingest vault/raw   (nothing changed)
+unchanged  raw/Clay - company-research.md → Companies/Clay.md (re-rendering 
+links)
+unchanged  raw/ClickHouse - company-research.md → Companies/ClickHouse.md 
+(re-rendering links)
+unchanged  raw/David AI - company-research.md → Companies/David AI.md 
+(re-rendering links)
+unchanged  raw/Decagon - company-research.md → Companies/Decagon.md 
+(re-rendering links)
+unchanged  raw/Harvey AI - company-research.md → Companies/Harvey AI.md 
+(re-rendering links)
+unchanged  raw/Sierra - company-research.md → Companies/Sierra.md (re-rendering 
+links)
+unchanged  raw/Surge AI - company-research.md → Companies/Surge AI.md 
+(re-rendering links)
+
+done · 7 sources · 13 wiki notes · 197 passages indexed
+real 9.05
+user 0.43
+sys 0.06
+
+## Run B: ./wiki ingest 'vault/raw/Sierra - company-research.md' --force
+gemma  summarizing raw/Sierra - company-research.md ...
+  → wiki/Companies/Sierra.md
+gemma  concept note: AI Customer Service Agents
+gemma  concept note: Agent Building Platforms
+gemma  concept note: Pricing and Business Models
+gemma  concept note: Enterprise Trust and Compliance
+
+done · 7 sources · 13 wiki notes · 197 passages indexed
+real 89.79
+user 0.69
+sys 0.11
+
+## After
+wiki/Companies/Clay.md
+wiki/Companies/ClickHouse.md
+wiki/Companies/David AI.md
+wiki/Companies/Decagon.md
+wiki/Companies/Harvey AI.md
+wiki/Companies/Sierra.md
+wiki/Companies/Surge AI.md
+wiki/Concepts/AI Customer Service Agents.md
+wiki/Concepts/AI Evaluation and Testing.md
+wiki/Concepts/AI Training Data.md
+wiki/Concepts/Agent Building Platforms.md
+wiki/Concepts/Enterprise Trust and Compliance.md
+wiki/Concepts/Pricing and Business Models.md
+
+file list hash before=fe8da7963859 after=fe8da7963859  IDENTICAL: no duplicates, no renames
+reviewed Harvey correction kept: 1
+reviewed notes: Concepts/AI Evaluation and Testing.md,Concepts/AI Training Data.md,Companies/Harvey AI.md,
+checked 14 notes · 0 problem(s)

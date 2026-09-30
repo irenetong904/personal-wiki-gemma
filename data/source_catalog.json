@@ -1,0 +1,493 @@
+{
+  "sources": {
+    "raw/Clay - company-research.md": {
+      "source_id": "raw/Clay - company-research.md",
+      "original_file": "raw/Clay - company-research.md",
+      "sha256": "4ef7519e28079f90f9913bbdd056b8a4eb16811798e3155d5a0721959ab1f766",
+      "title": "Clay",
+      "folder": "Companies",
+      "summary": "Clay is a GTM data and agentic-automation platform that allows GTM teams to automate prospecting, enrichment, scoring, and outreach. It combines data from over 200 providers with AI research agents like Claygent and orchestration tools. The company operates on a self-serve and enterprise SaaS model using credit-based usage pricing.",
+      "key_points": [
+        {
+          "point": "Combines 1st/3rd-party data from 200+ providers, Claygent agents, and orchestration tools.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Business Model is Self-serve + enterprise SaaS with credit-based usage pricing.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Core modules include Data infrastructure, Agents (Claygents), and Orchestration.",
+          "section": "Step 2: Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "Clay's moat includes an aggregator moat (200+ vendors) and category-creation community moat.",
+          "section": "Step 3: Competitive Landscape & Moat"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "Agentic Automation",
+          "why": "The platform utilizes AI research agents, Claygent, to automate GTM tasks."
+        },
+        {
+          "name": "GTM Engineering",
+          "why": "Clay has minted the 'GTM Engineer' role, positioning itself as the tool for this new category."
+        },
+        {
+          "name": "Waterfall Enrichment",
+          "why": "The platform uses waterfall enrichment by combining data from over 200 different providers."
+        },
+        {
+          "name": "Orchestration Layer",
+          "why": "Clay positions itself as the orchestration layer that turns data into actionable outcomes."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:48:50"
+    },
+    "raw/ClickHouse - company-research.md": {
+      "source_id": "raw/ClickHouse - company-research.md",
+      "original_file": "raw/ClickHouse - company-research.md",
+      "sha256": "60b681bad292769513503eb1c1b23db86178fcd182db9f95b1327ed0785ebe4a",
+      "title": "ClickHouse",
+      "folder": "Companies",
+      "summary": "ClickHouse is a leading open-source, column-oriented OLAP database used for real-time analytics at petabyte scale. It is expanding its focus to become a leading database for AI, offering a commercial cloud service alongside its open-source core. The company recently secured Series D funding and has a strong customer base including Meta and Anthropic.",
+      "key_points": [
+        {
+          "point": "It is an open-source, column-oriented OLAP database for real-time analytics.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Its business model combines an open-source core with a commercial ClickHouse Cloud offering usage/consumption-based pricing.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "The company recently raised Series D funding of $400M at a ~$15B valuation.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Core products include ClickHouse (OSS), ClickHouse Cloud, ClickStack (observability), and ClickPipes.",
+          "section": "Step 2: Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "Its moat includes extreme query speed, open-source adoption, and cost-efficiency compared to warehouses.",
+          "section": "Step 3: Competitive Landscape & Moat"
+        },
+        {
+          "point": "The strategic focus is to become the default database layer for AI/agentic apps and observability.",
+          "section": "Step 4: Future Goals & Growth Opportunities"
+        },
+        {
+          "point": "The company is hiring heavily in engineering and is building out RevOps/commercial systems.",
+          "section": "Step 6: Hiring Trends & Target Roles Deep-Dive"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "OLAP Database",
+          "why": "The document describes ClickHouse as a leading open-source, column-oriented OLAP database for real-time analytics."
+        },
+        {
+          "name": "Usage-Based Pricing",
+          "why": "The commercial ClickHouse Cloud utilizes a usage/consumption-based pricing model."
+        },
+        {
+          "name": "AI Database Layer",
+          "why": "ClickHouse is aggressively pivoting to be positioned as 'the leading database for AI' for agentic systems."
+        },
+        {
+          "name": "Open-Source Flywheel",
+          "why": "The company leverages its open-source core to build a competitive moat against cloud data platforms."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:49:23"
+    },
+    "raw/David AI - company-research.md": {
+      "source_id": "raw/David AI - company-research.md",
+      "original_file": "raw/David AI - company-research.md",
+      "sha256": "834ca164f03abe651d6c54a97022549eca38d16996f724704c02daa7a81d84c2",
+      "title": "David AI",
+      "folder": "Companies",
+      "summary": "David AI positions itself as the first audio data research lab, building the data layer required by frontier AI teams for speech, voice-agent, and multimodal AI. The company operates as a B2B audio data infrastructure provider, scaling a data factory rather than just selling static datasets. Its core process involves starting with a model capability hypothesis and productionizing the necessary audio data.",
+      "key_points": [
+        {
+          "point": "It is positioned as the first audio data research lab, not a generic labeling vendor.",
+          "section": "Executive Read"
+        },
+        {
+          "point": "The business model is B2B audio data infrastructure, involving dataset licensing and custom development.",
+          "section": "1. Company Snapshot & Business Model"
+        },
+        {
+          "point": "Key products include Converse (two-speaker conversations) and Atlas (multilingual audio dataset).",
+          "section": "2. Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "The company's moat includes audio-native specialization and a research-driven workflow.",
+          "section": "3. Competitive Landscape & Moat"
+        },
+        {
+          "point": "The company is scaling its data production engine alongside its technical platform.",
+          "section": "6. Hiring Trends & Target Roles Deep-Dive"
+        },
+        {
+          "point": "Operations roles focus on building and scaling data pipelines, contributor supply, and quality control.",
+          "section": "Operations (Broad)"
+        },
+        {
+          "point": "Product Ops owns data products from prototype to scale, defining workflows and monitoring throughput.",
+          "section": "Product Ops"
+        },
+        {
+          "point": "Data/Marketplace Ops builds contributor networks and runs channel experiments to improve retention.",
+          "section": "Data / Marketplace Ops"
+        },
+        {
+          "point": "GTM Engineering adjacent roles involve using funnel analytics and A/B testing for supply-side contributor acquisition.",
+          "section": "GTM Engineer"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "Data Factory Scaling",
+          "why": "David AI is focused on scaling a data factory, which is its core operational product, rather than just selling datasets."
+        },
+        {
+          "name": "Model Capability Hypothesis",
+          "why": "The company's process begins by determining an audio AI capability to unlock, which drives data design."
+        },
+        {
+          "name": "Audio-Native Specialization",
+          "why": "This concept describes David AI's focus on audio dimensions like tone, emotion, and speaker overlap, which differentiates it from text-based vendors."
+        },
+        {
+          "name": "Research-Driven Workflow",
+          "why": "David AI designs datasets around desired model capabilities and evaluates model impact, moving beyond simple data cleaning."
+        },
+        {
+          "name": "Data Pipeline Scaling",
+          "why": "The company needs to turn bespoke audio data experiments into reliable, high-volume production systems."
+        },
+        {
+          "name": "Data Product Ownership",
+          "why": "Product Ops is responsible for owning data products from prototype through to scale."
+        },
+        {
+          "name": "Supply-Side Growth",
+          "why": "GTM Engineering is needed to build a growth system specifically for acquiring contributors, not just demand-side sales."
+        },
+        {
+          "name": "Contributor Network Management",
+          "why": "Data/Marketplace Ops is tasked with building and managing the contributor networks to ensure data quality and volume."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:50:39"
+    },
+    "raw/Decagon - company-research.md": {
+      "source_id": "raw/Decagon - company-research.md",
+      "original_file": "raw/Decagon - company-research.md",
+      "sha256": "d888f2027a4c1906985b0d60605bde84075d6deb582f777457872a58b6ba38f5",
+      "title": "Decagon",
+      "folder": "Companies",
+      "summary": "Decagon is positioning itself as an enterprise \"AI concierge\" platform for customer experience, moving beyond being just a chatbot vendor. Its product thesis centers on creating continuously improving AI agents through a comprehensive operating loop involving iteration, governance, and measurable outcomes. The company is focused on winning large enterprise customers by building reliable agent infrastructure.",
+      "key_points": [
+        {
+          "point": "Decagon builds enterprise AI agents for customer experience across voice, chat, email, SMS, and other channels.",
+          "section": "1. Company Snapshot & Business Model"
+        },
+        {
+          "point": "The company's product thesis is that AI agents should act like continuously improving teammates, not static SaaS configurations.",
+          "section": "Product Thesis"
+        },
+        {
+          "point": "Key product modules include AOPs, Duet, Duet Autopilot, and Watchtower for agent lifecycle management.",
+          "section": "2. Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "The company is focused on scaling from high-touch enterprise wins to a repeatable, globally deployable platform.",
+          "section": "4. Future Goals & Growth Opportunities"
+        },
+        {
+          "point": "The company has 119 open roles across various departments.",
+          "section": "Macro Hiring Trend"
+        },
+        {
+          "point": "Hiring is focused on deepening voice and agent infrastructure.",
+          "section": "d Product Ops hiring."
+        },
+        {
+          "point": "Leadership includes Co-founder & CEO Jesse Zhang and Co-founder & President Ashwin Sreenivas.",
+          "section": "5. Leadership Team"
+        },
+        {
+          "point": "The company values include Just Get It Done, Invent What Customers Want, Winner's Mindset, and The Polymath Principle.",
+          "section": "Leadership / Culture Signals"
+        },
+        {
+          "point": "Operations roles are critical for building repeatable systems across deployment, pricing, and GTM execution.",
+          "section": "Broad Operations Sweep"
+        },
+        {
+          "point": "International expansion is occurring in locations like London, Toronto, and Australia.",
+          "section": "d Product Ops hiring."
+        }
+      ],
+      "concepts": [
+        {
+          "name": "AI Concierge Platform",
+          "why": "This concept defines Decagon's strategic positioning as an advanced, holistic customer experience solution rather than just a simple chatbot."
+        },
+        {
+          "name": "Agent Operating Procedures",
+          "why": "AOPs are central to Decagon's product, allowing teams to define and iterate agent behavior using natural language instructions."
+        },
+        {
+          "name": "Continuous Improvement Loop",
+          "why": "This loop, powered by Duet and Autopilot, allows production signals to drive validated, self-improving agent updates."
+        },
+        {
+          "name": "Enterprise Governance",
+          "why": "Decagon emphasizes governance through simulations, versioning, and human approval to ensure enterprise trust and compliance."
+        },
+        {
+          "name": "Polymath Principle",
+          "why": "This principle suggests a good fit for candidates who can connect analytics, GTM, product, customer operations, and AI workflows."
+        },
+        {
+          "name": "Agent Infrastructure",
+          "why": "Decagon is actively hiring roles to deepen its voice and agent infrastructure capabilities."
+        },
+        {
+          "name": "Enterprise GTM",
+          "why": "The hiring mix indicates a strong push toward enterprise Go-To-Market strategies and technical sales."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:52:24"
+    },
+    "raw/Harvey AI - company-research.md": {
+      "source_id": "raw/Harvey AI - company-research.md",
+      "original_file": "raw/Harvey AI - company-research.md",
+      "sha256": "fd94191949cbbfa4d5d52a5d01c54ca5d938dadfccdd6506e6c7eeffcf53952f",
+      "title": "Harvey AI",
+      "folder": "Companies",
+      "summary": "Harvey AI provides domain-specific, professional-class AI, acting as an operating system for legal and professional services. The company operates on a B2B enterprise SaaS model, serving major law firms and corporate in-house teams globally. It has achieved significant funding and valuation, positioning itself as a category leader in legal AI.",
+      "key_points": [
+        {
+          "point": "Offers domain-specific AI for legal and professional services, functioning as an operating system for legal work.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Business model is B2B enterprise SaaS, including seat/enterprise subscriptions and custom 'legal engineering' teams.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Raised over $1B, reaching $200M at an $11B valuation in March 2026.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Core product modules include Agents, Vault, Knowledge, and Contract Intelligence.",
+          "section": "Step 2: Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "Its moat is built on deep enterprise trust (SOC2 II, ISO certifications) and high switching costs from embedded teams.",
+          "section": "Step 3: Competitive Landscape & Moat"
+        },
+        {
+          "point": "Strategic focus includes scaling agents, expanding legal-engineering globally, and pushing agentic autonomy.",
+          "section": "Step 4: Future Goals & Growth Opportunities"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "Agentic AI",
+          "why": "The company is evolving its products from simple assistants to long-horizon, agentic AI systems."
+        },
+        {
+          "name": "Enterprise SaaS Model",
+          "why": "Harvey AI utilizes a B2B enterprise SaaS model by selling subscriptions to law firms and corporate teams."
+        },
+        {
+          "name": "Legal Engineering",
+          "why": "The company employs embedded legal-engineering teams to build custom agents for clients."
+        },
+        {
+          "name": "AI Transformation",
+          "why": "The Command Center is designed to provide analytics and benchmarking for leaders undergoing AI transformation."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:53:04"
+    },
+    "raw/Sierra - company-research.md": {
+      "source_id": "raw/Sierra - company-research.md",
+      "original_file": "raw/Sierra - company-research.md",
+      "sha256": "766664f027fff7a19987341b1703d53ee9b5e181cd2a4769398c96f11f5edc77",
+      "title": "Sierra",
+      "folder": "Companies",
+      "summary": "Sierra provides enterprise conversational AI agents deployed across multiple channels to resolve customer issues and drive revenue. Their business model utilizes outcome-based pricing, aligning vendor incentives with achieved customer outcomes. The company is rapidly scaling, focusing on expanding into internal enterprise agents and regulated verticals.",
+      "key_points": [
+        {
+          "point": "Deploys conversational AI agents across chat, SMS, WhatsApp, email, voice, and ChatGPT.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Uses a B2B SaaS model with outcome-based pricing, paying for resolved outcomes.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Core modules include Agent Studio, Ghostwriter, and Horizon for long-horizon planning.",
+          "section": "Step 2: Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "The company's moat includes outcome-based pricing alignment and a full agent lifecycle platform.",
+          "section": "Step 3: Competitive Landscape & Moat"
+        },
+        {
+          "point": "Strategic focus is to become the global standard for AI-powered CX and expand to internal agents.",
+          "section": "Step 4: Future Goals & Growth Opportunities"
+        },
+        {
+          "point": "Bret Taylor is the Co-founder & CEO and Chair of OpenAI's board.",
+          "section": "Step 5: Leadership Team (Targeted)"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "Outcome-Based Pricing",
+          "why": "This document details how Sierra uses this pricing model to align vendor and buyer incentives."
+        },
+        {
+          "name": "Agentic AI",
+          "why": "The entire business revolves around deploying and evolving sophisticated AI agents to handle customer interactions."
+        },
+        {
+          "name": "Enterprise Distribution",
+          "why": "Bret Taylor's background provides the enterprise credibility that forms part of Sierra's competitive moat."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T23:03:41"
+    },
+    "raw/Surge AI - company-research.md": {
+      "source_id": "raw/Surge AI - company-research.md",
+      "original_file": "raw/Surge AI - company-research.md",
+      "sha256": "6df1783e6fa31efb6f80a8bd67de754a4adeb135a7394e86a1d126fde4b76fcf",
+      "title": "Surge AI",
+      "folder": "Companies",
+      "summary": "Surge AI is a human-data company focused on providing intelligence for frontier AI, offering services like RLHF and data labeling. It operates on a B2B model, providing bespoke programs and off-the-shelf frontier data and RL environments, and is entirely bootstrapped.",
+      "key_points": [
+        {
+          "point": "Provides RLHF/data labeling, RL environments, and an elite expert workforce to train LLMs.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Its business model includes B2B services and off-the-shelf frontier data and RL environments.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "The company has customers including Anthropic, Google, OpenAI, Meta, and Microsoft.",
+          "section": "Step 1: Company Snapshot & Business Model"
+        },
+        {
+          "point": "Core products include an Expert Workforce, OTS frontier data, evaluations/benchmarks, and a platform for oversight.",
+          "section": "Step 2: Product Portfolio Deep-Dive"
+        },
+        {
+          "point": "Its moat is built on focusing on complex, agentic, expert-level data and proprietary talent-matching.",
+          "section": "Step 3: Competitive Landscape & Moat"
+        },
+        {
+          "point": "The company's strategic focus is to scale RL environments and evaluations as models become agentic.",
+          "section": "Step 4: Future Goals & Growth Opportunities"
+        },
+        {
+          "point": "Edwin Chen is the Founder & CEO, known for advocating quality-over-scale and lean org design.",
+          "section": "Step 5: Leadership Team (Targeted)"
+        }
+      ],
+      "concepts": [
+        {
+          "name": "Human Intelligence For AGI",
+          "why": "This concept describes Surge AI's mission to use human intelligence to advance Artificial General Intelligence."
+        },
+        {
+          "name": "Bootstrapped Business Model",
+          "why": "The document highlights that Surge AI is profitable and entirely bootstrapped, avoiding external venture capital."
+        },
+        {
+          "name": "Frontier Data",
+          "why": "The company specializes in providing specialized, high-quality data and RL environments for leading AI models."
+        },
+        {
+          "name": "Agentic Behavior",
+          "why": "Surge AI is emphasizing the development of RL environments and evaluations related to agentic behavior."
+        }
+      ],
+      "model": "gemma4:e4b",
+      "ingested_at": "2026-09-29T22:54:28"
+    }
+  },
+  "concepts": {
+    "ai customer service agent": {
+      "title": "AI Customer Service Agents",
+      "why": {
+        "raw/Decagon - company-research.md": "Builds enterprise AI agents for customer experience across voice, chat, email and SMS, and lists Sierra as a direct competitor.",
+        "raw/Sierra - company-research.md": "Deploys enterprise conversational AI agents to resolve customer issues, and names Decagon as a direct competitor."
+      },
+      "summary": "AI Customer Service Agents are a competitive category featuring direct and adjacent competitors offering various solutions for customer interaction. Companies in this space differentiate themselves through specialized execution, AI-native approaches, and unique business models like outcome-based pricing."
+    },
+    "ai training data": {
+      "title": "AI Training Data",
+      "why": {
+        "raw/David AI - company-research.md": "Designs, collects and evaluates audio datasets for frontier AI labs, and lists Scale AI and Surge AI as competitors.",
+        "raw/Surge AI - company-research.md": "Supplies RLHF data, RL environments and expert human data to frontier labs, and lists Scale AI as a competitor."
+      },
+      "summary": "David AI focuses on designing, collecting, and productionizing high-quality audio datasets for various AI applications. Its business model is B2B audio data infrastructure, serving frontier AI labs and large enterprises."
+    },
+    "agent building platform": {
+      "title": "Agent Building Platforms",
+      "why": {
+        "raw/Clay - company-research.md": "Ships Claygent AI research agents plus Clay MCP and an agent CLI/API for building GTM agents.",
+        "raw/Decagon - company-research.md": "Lets teams define agent behavior in natural-language Agent Operating Procedures, improved by Duet and Duet Autopilot.",
+        "raw/Harvey AI - company-research.md": "Is shifting from an assistant to agentic, long-horizon agents; customers have built 25,000+ custom agents with Agent Builder.",
+        "raw/Sierra - company-research.md": "Offers Agent Studio and Ghostwriter, an agent-building agent that turns SOPs and transcripts into production agents."
+      },
+      "summary": "Agent Building Platforms facilitate the creation and management of AI agents, allowing users to define and deploy complex, automated workflows. These platforms incorporate features like agent builders, long-horizon planning, and the ability to translate natural language instructions into functional agents."
+    },
+    "pricing and busines model": {
+      "title": "Pricing and Business Models",
+      "why": {
+        "raw/Clay - company-research.md": "Sells self-serve and enterprise SaaS with credit-based usage pricing.",
+        "raw/ClickHouse - company-research.md": "Pairs an open-source core with ClickHouse Cloud on usage/consumption-based pricing.",
+        "raw/Decagon - company-research.md": "Lists pricing model uncertainty (usage cost, outcome-based pricing) as a live strategic risk.",
+        "raw/Sierra - company-research.md": "Uses outcome-based pricing: customers pay for resolved outcomes, not seats.",
+        "raw/Surge AI - company-research.md": "Has been profitable from day one and entirely bootstrapped, with no external funding."
+      },
+      "summary": "Several companies utilize usage-based or outcome-based pricing models for their AI/data services. Clay uses credit-based usage pricing, while ClickHouse Cloud employs usage/consumption-based pricing. Sierra specifically utilizes outcome-based pricing, charging for resolved customer issues."
+    },
+    "enterprise trust and compliance": {
+      "title": "Enterprise Trust and Compliance",
+      "why": {
+        "raw/Decagon - company-research.md": "Treats security, guardrails, versioning, testing and human approval as its enterprise-trust moat.",
+        "raw/Harvey AI - company-research.md": "Builds its moat on certifications such as SOC2 II, ISO 27001/27701/42001, GDPR and AIUC-1.",
+        "raw/Sierra - company-research.md": "Lists deep compliance (SOC 2, ISO 27001/42001, HIPAA, FedRAMP, PCI DSS) as part of its moat."
+      },
+      "summary": "Enterprise trust is crucial because customer-facing AI failures can negatively impact brand trust and compliance. This trust is supported by features like security, guardrails, versioning, testing, human approval, and auditability."
+    },
+    "ai evaluation and testing": {
+      "title": "AI Evaluation and Testing",
+      "why": {
+        "raw/ClickHouse - company-research.md": "Acquired Langfuse for LLM observability and evals.",
+        "raw/David AI - company-research.md": "Evaluates whether its data improves model capabilities, not just whether the data is clean.",
+        "raw/Decagon - company-research.md": "Provides simulations, auto-generated tests, Watchtower QA and DuetBench to validate agent changes.",
+        "raw/Surge AI - company-research.md": "Sells evaluations and benchmarks and critiques leaderboards that optimize for the wrong objectives."
+      },
+      "summary": "AI evaluation and testing involves measuring model impact beyond simple data cleanliness, focusing on how data improves model capabilities. Specific approaches include using benchmarks, simulations, and dedicated observability tools for agent and LLM performance."
+    }
+  },
+  "themes_reviewed": true
+}

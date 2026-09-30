@@ -37,6 +37,7 @@ def chat(messages, temperature=0.2, json_format=False):
         model=config.MODEL,
         messages=messages,
         format="json" if json_format else None,
+        think=config.THINK,  # Gemma 4 thinks by default; off = same answers ~6x faster (see README)
         options={"temperature": temperature, "num_ctx": config.NUM_CTX},
         keep_alive="10m",
     )
@@ -45,6 +46,7 @@ def chat(messages, temperature=0.2, json_format=False):
         "model": config.MODEL,
         "execution": "local",
         "seconds": round(elapsed, 2),
+        "load_seconds": round((resp.get("load_duration") or 0) / 1e9, 2),
         "prompt_tokens": resp.get("prompt_eval_count"),
         "output_tokens": resp.get("eval_count"),
     }

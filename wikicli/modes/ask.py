@@ -26,7 +26,7 @@ def answer(question: str) -> dict:
     """Core ask workflow, shared by the CLI and the eval runner. No chat history is used."""
     # retrieval.search already drops passages below the relevance floor, so an empty list is possible
     # and lets Gemma say "insufficient" instead of forcing an answer from noise.
-    passages = retrieval.search(question, k=config.TOP_K)
+    passages = retrieval.search(question, k=config.TOP_K, kinds=config.EVIDENCE_KINDS)
     text, stats = llm.chat(prompts.ask_messages(question, passages), temperature=config.TEMPERATURE_ASK)
     check = check_citations(text, passages)
     return {"question": question, "passages": passages, "retrieval": retrieval.describe(),

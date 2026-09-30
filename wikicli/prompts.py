@@ -50,3 +50,26 @@ def concept_messages(name: str, passages: list[dict]) -> list[dict]:
             "with 2-5 details. Do not add outside knowledge.")},
         {"role": "user", "content": f"CONCEPT: {name}\n\nPASSAGES:\n{format_passages(passages)}"},
     ]
+
+
+def theme_messages(listing: str, existing: list[str]) -> list[dict]:
+    reuse = ("Existing theme names (reuse them exactly when they still fit): " + ", ".join(existing)) if existing else ""
+    return [
+        {"role": "system", "content": (
+            "You organize a personal wiki about companies. Group the companies' topics into 4-8 shared THEMES. "
+            "Each theme must apply to at least 2 companies, be a general idea (not a company or product name), "
+            "and have a 2-4 word Title Case name. For each member, write one sentence on how that company relates "
+            "to the theme, using only the topics given. "
+            'Return JSON: {"themes": [{"name": "...", "members": [{"company": "<exact company name>", "why": "..."}]}]}')},
+        {"role": "user", "content": f"{reuse}\n\nCOMPANIES AND THEIR TOPICS:\n{listing}"},
+    ]
+
+
+def assign_messages(company: str, topics: str, theme_names: list[str]) -> list[dict]:
+    return [
+        {"role": "system", "content": (
+            "Decide which EXISTING wiki themes a company clearly belongs to, using only its topics. "
+            "Never invent new theme names. For each match write one sentence on how the company relates to it. "
+            'Return JSON: {"themes": [{"name": "<exact existing theme name>", "why": "..."}]} (empty list if none).')},
+        {"role": "user", "content": f"THEMES: {', '.join(theme_names)}\n\nCOMPANY: {company}\nTOPICS: {topics}"},
+    ]

@@ -13,7 +13,7 @@ from wikicli import check, config, ingest, retrieval
 from wikicli.modes import ask, chat
 
 FAKE = {
-    "a.md": {"title": "Acme Robotics", "folder": "Companies", "summary": "Acme builds robots. It sells to factories.",
+    "a.md": {"title": "Acme Robotics Company Profile", "company_name": "Acme Robotics", "folder": "Companies", "summary": "Acme builds robots. It sells to factories.",
              "key_points": [{"point": "Uses outcome-based pricing.", "section": "Step 1: Business Model"}],
              "concepts": [{"name": "Outcome-Based Pricing", "why": "Acme charges per task."},
                           {"name": "Factory Automation", "why": "Core market."}]},
@@ -25,6 +25,11 @@ FAKE = {
 
 def fake_chat(messages, temperature=0.2, json_format=False):
     user = messages[-1]["content"]
+    if messages[0]["content"].startswith("You organize"):
+        return json.dumps({"themes": [
+            {"name": "Outcome-Based Pricing", "members": [{"company": "Acme Robotics", "why": "Acme charges per task."},
+                                                          {"company": "Beta Labs", "why": "Beta charges per resolution."}]},
+            {"name": "Lonely Theme", "members": [{"company": "Acme Robotics", "why": "only one member"}]}]}), {}
     if user.startswith("CONCEPT:"):
         return json.dumps({"summary": "Paying for results.", "details": [{"point": "Used by Acme.", "source": "S1"}]}), {}
     name = user.split("\n", 1)[0].replace("SOURCE FILE: ", "")
@@ -69,6 +74,7 @@ class HarnessTest(unittest.TestCase):
         self.assertIn("[[Outcome-Based Pricing]] — Acme charges per task.", acme)
         self.assertIn("[[Beta Labs]] — also covers Outcome-Based Pricing", acme)
         self.assertNotIn("[[Factory Automation]]", acme)  # single-source concept: plain text, not a dead link
+        self.assertNotIn("Lonely Theme", acme)  # themes need 2+ member sources
         self.assertEqual(check.run(), 0)
         # re-ingest (unchanged and forced) → same files, no duplicates
         ingest.run(config.RAW_DIR)
@@ -79,6 +85,12 @@ class HarnessTest(unittest.TestCase):
         note.write_text(note.read_text().replace("reviewed: False", "reviewed: true") + "\nHuman fix.\n")
         ingest.run(config.RAW_DIR)
         self.assertIn("Human fix.", note.read_text())
+        # forcing ANOTHER source must not touch the reviewed note or rename a reviewed theme map
+        cat = ingest.load_catalog(); cat["themes_reviewed"] = True
+        cat["concepts"]["outcome based pricing"]["title"] = "Outcome-Based Pricing"; ingest.save_catalog(cat)
+        ingest.run(config.RAW_DIR / "b.md", force=True)
+        self.assertIn("Human fix.", note.read_text())
+        self.assertEqual(self.notes(), first)
 
     def test_search_needs_no_model_and_ask_checks_citations(self):
         ingest.run(config.RAW_DIR)

@@ -1,0 +1,34 @@
+gemma  summarizing raw/Clay - company-research.md ...
+  → wiki/Companies/Clay GTM Automation Platform.md
+gemma  summarizing raw/ClickHouse - company-research.md ...
+  → wiki/Companies/ClickHouse Database Company Profile.md
+gemma  summarizing raw/David AI - company-research.md ...
+  → wiki/Companies/David AI.md
+gemma  summarizing raw/Decagon - company-research.md ...
+  → wiki/Companies/Decagon Enterprise AI Concierge.md
+gemma  summarizing raw/Harvey AI - company-research.md ...
+  → wiki/Companies/Harvey AI Company Research.md
+gemma  summarizing raw/Sierra - company-research.md ...
+  → wiki/Companies/Sierra Conversational AI Agents.md
+gemma  summarizing raw/Surge AI - company-research.md ...
+  → wiki/Companies/Surge AI.md
+
+done · 7 sources · 7 wiki notes · 160 passages indexed
+  wiki/Companies/Clay GTM Automation Platform.md
+  wiki/Companies/ClickHouse Database Company Profile.md
+  wiki/Companies/David AI.md
+  wiki/Companies/Decagon Enterprise AI Concierge.md
+  wiki/Companies/Harvey AI Company Research.md
+  wiki/Companies/Sierra Conversational AI Agents.md
+  wiki/Companies/Surge AI.md
+
+## Run 1 findings (before fix)
+Per-source concepts extracted by Gemma (no concept name shared by 2+ sources -> 0 concept notes):
+- Clay GTM Automation Platform | Agentic Automation, Orchestration Layer, GTM Engineering, Credit-Based Pricing
+- ClickHouse Database Company Profile | OLAP Database, Open-Source Flywheel, Usage-Based Pricing, AI Database Layer
+- David AI | Data Factory Scaling, Capability-Driven Data, Audio Specialization, B2B Infrastructure, Data Pipeline Scaling, Data Product Ownership, Contributor Network Growth, Growth System Implementation
+- Decagon Enterprise AI Concierge | AI Concierge Platform, Agent Operating Procedures, Continuous Improvement Loop, Enterprise Governance, Polymath Principle, Agent Platform Scaling, Enterprise Go-To-Market
+- Harvey AI Company Research | Agentic AI Systems, Enterprise SaaS Model, Legal Technology Moat, AI Transformation
+- Sierra Conversational AI Agents | Outcome-Based Pricing, Agentic CX, Long-Horizon Agents, AI Agent Lifecycle
+- Surge AI | Human Intelligence For AGI, Bootstrapped Business Model, RLHF, Off-The-Shelf Data
+Titles ignored the 'company name only' rule (e.g. 'Harvey AI Company Research').

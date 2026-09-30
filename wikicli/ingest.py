@@ -83,7 +83,47 @@ def summarize_source(path: Path) -> dict:
     merged["key_points"] = merged["key_points"][:10]
     if merged["folder"] not in config.TOPIC_FOLDERS:
         merged["folder"] = "Concepts"
+    # Run 1 showed Gemma padding titles ("Harvey AI Company Research"); a company note is named after the company.
+    if merged["folder"] == "Companies" and first.get("company_name"):
+        merged["title"] = first["company_name"]
     return merged
+
+
+def consolidate_themes(cat: dict) -> list[dict]:
+    """Ask Gemma to group per-source concepts into themes shared by 2+ sources.
+
+    Run 1 showed that per-document extraction names the same idea differently in each source
+    ("Outcome-Based Pricing" / "Usage-Based Pricing" / "Credit-Based Pricing"), so exact matching found nothing.
+    """
+    by_title = {s["title"].lower(): sid for sid, s in cat["sources"].items()}
+    listing = "\n".join(f'- {s["title"]}: ' + "; ".join(f'{c["name"]} ({c.get("why", "")})' for c in s["concepts"])
+                        for s in cat["sources"].values())
+    existing = [c["title"] for c in cat["concepts"].values()]
+    data = _json_call(prompts.theme_messages(listing, existing))
+    themes = []
+    for th in data.get("themes", []):
+        members = {}
+        for m in th.get("members", []):
+            sid = by_title.get(str(m.get("company", "")).strip().lower())
+            if sid:
+                members[sid] = str(m.get("why", "")).strip()
+        name = clean_title(str(th.get("name", "")), 4)
+        if len(members) >= 2 and name.lower() not in by_title:
+            themes.append({"key": concept_key(name), "title": name, "why": members})
+    return themes[:8]
+
+
+def assign_to_themes(cat: dict, sid: str) -> None:
+    """Add a new source to the existing (reviewed) themes it clearly belongs to."""
+    s = cat["sources"][sid]
+    topics = "; ".join(f'{c["name"]} ({c.get("why", "")})' for c in s["concepts"])
+    names = [c["title"] for c in cat["concepts"].values()]
+    data = _json_call(prompts.assign_messages(s["title"], topics, names))
+    by_name = {c["title"].lower(): k for k, c in cat["concepts"].items()}
+    for m in data.get("themes", []):
+        k = by_name.get(str(m.get("name", "")).strip().lower())
+        if k and m.get("why"):
+            cat["concepts"][k]["why"][sid] = str(m["why"]).strip()
 
 
 def section_link(raw_rel: str, section: str, headings: list[str]) -> str:
@@ -122,30 +162,25 @@ def render_source_note(entry: dict, cat: dict, concept_titles: dict) -> str:
     for kp in entry["key_points"]:
         out.append(f"- {kp.get('point', '').strip()} ({section_link(raw_rel, kp.get('section', ''), headings)})")
     out += ["", "## Sources", f"- Original: [[{raw_rel}]] (unchanged copy in `raw/`)", "", "## Related"]
-    related, mentioned = [], []
-    for c in entry["concepts"]:
-        key = concept_key(c["name"])
-        if key in concept_titles:
-            related.append(f"- [[{concept_titles[key]}]] — {c.get('why', '').strip()}")
-        else:
-            mentioned.append(c["name"])
-    # Other sources that share at least one concept with this one
-    mine = {concept_key(c["name"]) for c in entry["concepts"]} & set(concept_titles)
-    for sid, other in cat["sources"].items():
-        if sid == entry["source_id"]:
+    related = []
+    sid = entry["source_id"]
+    mine = {k for k in concept_titles if sid in cat["concepts"].get(k, {}).get("why", {})}
+    for k in sorted(mine, key=lambda k: concept_titles[k]):
+        related.append(f"- [[{concept_titles[k]}]] — {cat['concepts'][k]['why'][sid]}")
+    for other_id, other in cat["sources"].items():  # companies sharing at least one theme
+        if other_id == sid:
             continue
-        shared = mine & {concept_key(c["name"]) for c in other["concepts"]}
+        shared = [concept_titles[k] for k in sorted(mine) if other_id in cat["concepts"][k]["why"]]
         if shared:
-            names = ", ".join(concept_titles[s] for s in sorted(shared))
-            related.append(f"- [[{other['title']}]] — also covers {names}")
+            related.append(f"- [[{other['title']}]] — also covers {', '.join(shared)}")
     out += related or ["- _(no related notes yet)_"]
-    if mentioned:
-        out += ["", "## Also mentioned", ", ".join(mentioned)]
+    if entry["concepts"]:  # this source's own topic labels, as plain text (not links to empty notes)
+        out += ["", "## Topics in this source", ", ".join(c["name"] for c in entry["concepts"])]
     return "\n".join(out) + "\n"
 
 
 def render_concept_note(title: str, info: dict, gen: dict, passages: list[dict], cat: dict) -> str:
-    fm = frontmatter({"type": "concept-note", "concept_id": info["key"], "generated_by": config.MODEL,
+    fm = frontmatter({"type": "concept-note", "concept_id": concept_key(title), "generated_by": config.MODEL,
                       "ingested_at": datetime.now().isoformat(timespec="seconds"), "reviewed": False,
                       "tags": ["concept"]})
     out = [fm, "", f"# {title}", "", gen.get("summary", "").strip(), "", "## Details"]
@@ -157,10 +192,8 @@ def render_concept_note(title: str, info: dict, gen: dict, passages: list[dict],
             ref = f" ([[{p['path']}|{Path(p['path']).name}]])"
         out.append(f"- {d.get('point', '').strip()}{ref}")
     out += ["", "## Where it appears in my notes"]
-    for sid in info["sources"]:
-        s = cat["sources"][sid]
-        why = next((c.get("why", "") for c in s["concepts"] if concept_key(c["name"]) == info["key"]), "")
-        out.append(f"- [[{s['title']}]] — {why}")
+    for sid, why in info["why"].items():
+        out.append(f"- [[{cat['sources'][sid]['title']}]] — {why}")
     out += ["", "## Sources"] + [f"- [[{p}]]" for p in sorted({p['path'] for p in passages})]
     return "\n".join(out) + "\n"
 
@@ -200,6 +233,8 @@ def run(target: Path, force: bool = False) -> None:
     llm.check_model()
     cat = load_catalog()
     changed_sources = set()
+    # --force applies only to the files named on this run, never to every reviewed note in the vault
+    forced = {f.relative_to(config.VAULT.resolve()).as_posix() for f in files} if force else set()
 
     # 1) one note per source (stable name via catalog)
     for f in files:
@@ -208,10 +243,10 @@ def run(target: Path, force: bool = False) -> None:
         digest = sha256(f)
         prev = cat["sources"].get(sid)
         note_path = config.WIKI_DIR / prev["folder"] / f"{prev['title']}.md" if prev else None
-        if prev and prev["sha256"] == digest and not force and note_path.exists():
+        if prev and prev["sha256"] == digest and sid not in forced and note_path.exists():
             console.print(f"[dim]unchanged[/dim]  {raw_rel} → {prev['folder']}/{prev['title']}.md (re-rendering links)")
             continue
-        if prev and is_reviewed(note_path) and not force:
+        if prev and is_reviewed(note_path) and sid not in forced:
             console.print(f"[yellow]reviewed, kept[/yellow]  {raw_rel} (use --force to regenerate)")
             continue
         console.print(f"[cyan]gemma[/cyan]  summarizing {raw_rel} ...")
@@ -230,35 +265,39 @@ def run(target: Path, force: bool = False) -> None:
         changed_sources.add(sid)
         console.print(f"  → wiki/{folder}/{title}.md")
 
-    # 2) concepts shared by >= 2 sources become their own notes
-    shared = defaultdict(set)
-    names = {}
-    for sid, s in cat["sources"].items():
-        for c in s["concepts"]:
-            k = concept_key(c["name"])
-            shared[k].add(sid)
-            names.setdefault(k, clean_title(c["name"], 4))
-    source_titles = {s["title"].lower() for s in cat["sources"].values()}
-    concept_titles = {}
+    # 2) themes shared by >= 2 sources become concept notes (cached; only recomputed when a source changed)
     retrieval.build_index()  # concept notes are written from retrieved raw passages
-    for k, sids in shared.items():
-        if len(sids) < 2 or names[k].lower() in source_titles:
-            continue
-        prev = cat["concepts"].get(k)
-        title = prev["title"] if prev else names[k]
-        concept_titles[k] = title
+    if cat.get("themes_reviewed"):
+        # A human-reviewed theme map is never renamed or re-clustered; new sources may only join existing themes.
+        members = {sid for c in cat["concepts"].values() for sid in c["why"]}
+        for sid in sorted(changed_sources - members):
+            console.print(f"[cyan]gemma[/cyan]  matching {sid} to reviewed themes ...")
+            assign_to_themes(cat, sid)
+        themes = [{"key": k, "title": c["title"], "why": c["why"]} for k, c in cat["concepts"].items()]
+    elif changed_sources or not cat["concepts"]:
+        console.print("[cyan]gemma[/cyan]  consolidating shared themes across sources ...")
+        themes = consolidate_themes(cat)
+    else:
+        themes = [{"key": k, "title": c["title"], "why": c["why"]} for k, c in cat["concepts"].items()]
+    concept_titles = {th["key"]: th["title"] for th in themes}
+    for th in themes:
+        prev = cat["concepts"].get(th["key"])
+        title = prev["title"] if prev else th["title"]  # keep an established name
+        concept_titles[th["key"]] = title
         note = config.WIKI_DIR / "Concepts" / f"{title}.md"
-        info = {"key": k, "sources": sorted(sids)}
-        stale = force or not prev or prev["sources"] != info["sources"] or (sids & changed_sources) or not note.exists()
-        if stale and not (is_reviewed(note) and not force):
+        stale = not prev or sorted(prev["why"]) != sorted(th["why"]) or not note.exists() \
+            or bool(set(th["why"]) & changed_sources)
+        if stale and not is_reviewed(note):  # reviewed concept notes are kept; delete the file to regenerate
             console.print(f"[cyan]gemma[/cyan]  concept note: {title}")
-            passages = retrieval.search(title, k=4, kinds=("raw",))
+            passages = []
+            for sid, why in th["why"].items():  # evidence from every member source, not just the best-matching one
+                # query = theme + this member's reason; a vague theme name alone found nothing for some members (review 1)
+                passages += retrieval.search(f"{title} {why}", k=2, kinds=("raw",), paths={sid})
             gen = _json_call(prompts.concept_messages(title, passages))
             note.parent.mkdir(parents=True, exist_ok=True)
-            cat["concepts"][k] = {"title": title, "sources": info["sources"], "summary": gen.get("summary", "")}
-            note.write_text(render_concept_note(title, info, gen, passages, cat), encoding="utf-8")
-    # drop concept notes that no longer have two sources
-    for k in list(cat["concepts"]):
+            cat["concepts"][th["key"]] = {"title": title, "why": th["why"], "summary": gen.get("summary", "")}
+            note.write_text(render_concept_note(title, cat["concepts"][th["key"]], gen, passages, cat), encoding="utf-8")
+    for k in list(cat["concepts"]):  # themes that disappeared lose their note
         if k not in concept_titles:
             old = config.WIKI_DIR / "Concepts" / f"{cat['concepts'][k]['title']}.md"
             if old.exists() and not is_reviewed(old):
@@ -268,7 +307,7 @@ def run(target: Path, force: bool = False) -> None:
     # 3) render source notes (links depend on the final concept set) + index + retrieval index
     for s in cat["sources"].values():
         note = config.WIKI_DIR / s["folder"] / f"{s['title']}.md"
-        if is_reviewed(note) and not force:
+        if is_reviewed(note) and s["source_id"] not in forced:
             continue
         note.parent.mkdir(parents=True, exist_ok=True)
         note.write_text(render_source_note(s, cat, concept_titles), encoding="utf-8")

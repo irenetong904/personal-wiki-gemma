@@ -5,9 +5,9 @@ from rich.panel import Panel
 from .. import config, evidence, retrieval
 
 
-def run(query: str, k: int = config.TOP_K, save: bool = False) -> list[dict]:
+def run(query: str, k: int = config.TOP_K, save: bool = False, include_wiki: bool = False) -> list[dict]:
     console = Console()
-    hits = retrieval.search(query, k=k)
+    hits = retrieval.search(query, k=k, kinds=("raw", "wiki") if include_wiki else config.EVIDENCE_KINDS)
     console.print(f"[bold]search[/bold] · retrieval only, no answer generated · {retrieval.describe()}")
     console.print(f"query: [cyan]{query}[/cyan]\n")
     if not hits:

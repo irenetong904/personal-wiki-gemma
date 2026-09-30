@@ -5,6 +5,10 @@ unchanged research notes into a linked Obsidian wiki with **local Gemma 4 E4B**,
 **chat** (personal assistant), **ask** (grounded, cited answers), and **search** (original passages, no model).
 Everything runs offline on a MacBook Air M4.
 
+> **Status (2026-09-29):** harness, wiki, re-ingestion check, and retrieval evaluations are complete. The four ask-mode
+> tests and chat/search mode checks have a pre-offline dry run in [`evidence/ask/`](evidence/ask/) (`dryrun-*`). The
+> official offline run, Obsidian screenshots, and measurements tables are being added; sections marked _TODO_ are in progress.
+
 | Quick links | |
 |---|---|
 | CLI + harness code | [`wikicli/`](wikicli/) · launcher [`wiki`](wiki) |
@@ -181,7 +185,25 @@ exactly what the assistant can and cannot do, so capability answers are accurate
 
 ## 5. Evidence
 
-_TODO_
+### Retrieval evaluated before the model (`evals/retrieval_check.py`, no Gemma involved)
+The question set was written first ([`evals/questions.md`](evals/questions.md)). Retrieval was evaluated on its own,
+and every configuration change was rerun and kept:
+
+| Version (evidence file) | Change | Q1 Sierra pricing | Q2 Surge funding (paraphrase) | Q3 Scale AI rivals (2 sources) |
+|---|---|---|---|---|
+| [v1](evidence/search/retrieval-v1-bm25-baseline.md) | BM25 only | ✅ | ❌ wording mismatch | ❌ David AI filled all 5 slots |
+| [v2a](evidence/search/retrieval-v2a-bm25-diversity.md) | + max 2 passages per source, drop `---` passages | ❌ Step 1 pushed out | ✅* | ✅ |
+| [v2b](evidence/search/retrieval-v2b-hybrid-with-wiki-summaries.md) | + EmbeddingGemma, index now includes generated wiki notes | ❌ | ❌ | ❌ summaries outranked originals |
+| [v2](evidence/search/retrieval-v2-hybrid-embeddinggemma.md) | ask/search cite **originals only** | ❌ cap still too strict | ✅* | ✅ |
+| [v2c](evidence/search/retrieval-v2c-hybrid-cap3.md) | per-source cap 2 → 3 | ✅ | ✅* | ✅ |
+| _TODO v2d_ | stricter check (expected **wording**, not just section) + weighted fusion | | | |
+
+\* The early checks passed Q2 whenever *any* passage from Surge's "Step 1" section was retrieved. The first ask-mode dry run
+showed that was too lenient: the section is split into two passages, and only the headcount/customers half came back.
+Gemma answered "insufficient evidence", which was **correct for the evidence it was given**. The check now requires
+the expected wording in a retrieved passage.
+
+_TODO: ask-mode cards, mode checks, offline run._
 
 ## 6. Reflection
 

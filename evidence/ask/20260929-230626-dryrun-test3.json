@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-09-29T23:06:26",
+  "device": "arm64 Darwin 15.3",
+  "question": "Which AI data companies list Scale AI as a competitor?",
+  "passages": [
+    {
+      "id": "raw/David AI - company-research.md#3. Competitive Landscape & Moat#0",
+      "path": "raw/David AI - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Competitor | Category | Why They Compete | David AI Differentiation Angle |\n|---|---|---|---|\n| Scale AI | Direct/indirect AI data infrastructure | Large-scale data labeling, RLHF, and data operations for model companies. | David AI is audio-native and founded by former Scale operators/engineers; its differentiation is specialization and research-driven audio formats. |\n| Surge AI | Direct/indirect premium data provider | Premium human data and data operations for AI labs. | David AI is more narrowly focused on audio, speech-to-speech, multilingual, and voice-interaction data. |",
+      "score": 13.72,
+      "cosine": 0.616
+    },
+    {
+      "id": "raw/David AI - company-research.md#3. Competitive Landscape & Moat#1",
+      "path": "raw/David AI - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Appen / TELUS International AI | Indirect incumbent | Established contributor networks and multilingual data operations. | Incumbents have scale, but David AI has startup speed, AI-lab workflow, and audio-specific research rigor. |\n| Defined.ai / SpeechOcean | Direct speech dataset vendors | Speech/audio dataset marketplaces for ASR, TTS, translation, and language coverage. | David AI emphasizes custom capability-driven data design and model-impact evaluation, not just catalog access. |\n| In-house AI lab data teams | Direct alternative | Frontier labs can collect their own proprietary data. | David AI's pitch is speed, specialization, contributor network, and taking operational burden off researchers. |",
+      "score": 5.67,
+      "cosine": 0.524
+    },
+    {
+      "id": "raw/Surge AI - company-research.md#Step 3: Competitive Landscape & Moat#0",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 3: Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "- **Competitors:** **Scale AI** (Meta-backed, ~$29B), Mercor, Turing, Invisible Technologies; Appen/Labelbox (legacy).\n- **Moat:** Early focus on complex, agentic, expert-level data (vs. commodity labeling); proprietary talent-matching → low annotator churn / high quality; extreme capital efficiency + profitability = pricing/independence leverage; deep frontier-lab relationships.\n- **Position:** Quiet market leader by revenue in human data — larger than Scale by 2024 revenue, without raising a dollar.",
+      "score": 5.16,
+      "cosine": 0.617
+    },
+    {
+      "id": "raw/Decagon - company-research.md#3. Competitive Landscape & Moat#0",
+      "path": "raw/Decagon - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Competitor | Category | Why They Compete | Decagon Differentiation Angle |\n|---|---|---|---|\n| Sierra | Direct AI CX agent competitor | Enterprise AI agents for customer service and customer operations. | Decagon emphasizes AOPs, fast iteration, broad deployment strategist function, and measurable enterprise case studies. |\n| Intercom Fin | Direct/adjacent | AI support agent inside Intercom's support platform, strong for digital-first support teams. | Decagon is more enterprise/custom and omnichannel across voice/chat/email/SMS, with heavier deployment and integration motion. |",
+      "score": 8.71,
+      "cosine": 0.487
+    },
+    {
+      "id": "raw/David AI - company-research.md#1. Company Snapshot & Business Model#2",
+      "path": "raw/David AI - company-research.md",
+      "section": "1. Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "| Target Audience / Key Customers | Frontier AI labs, Mag 7 / FAANG companies, and enterprises building production audio AI. The Series B post says David AI works with several Mag 7 companies and most leading AI labs; the Series A post says it supports most Mag 7 companies and nearly every leading audio AI lab. |",
+      "score": 9.37,
+      "cosine": 0.394
+    }
+  ],
+  "retrieval": "hybrid: BM25 + embeddinggemma cosine, reciprocal rank fusion",
+  "answer": "Scale AI is listed as a competitor by David AI [S1]. David AI differentiates itself from Scale AI by being audio-native and founded by former Scale operators/engineers, specializing in research-driven audio formats [S1]. Surge AI also lists Scale AI as a competitor [S3].",
+  "citation_check": {
+    "cited": [
+      "S1",
+      "S3"
+    ],
+    "invalid": [],
+    "insufficient": false,
+    "uncited_answer": false,
+    "cited_sources": [
+      "S1 → raw/David AI - company-research.md › 3. Competitive Landscape & Moat",
+      "S3 → raw/Surge AI - company-research.md › Step 3: Competitive Landscape & Moat"
+    ]
+  },
+  "stats": {
+    "model": "gemma4:e4b",
+    "execution": "local",
+    "seconds": 7.58,
+    "load_seconds": 0.0,
+    "prompt_tokens": 949,
+    "output_tokens": 61
+  }
+}
