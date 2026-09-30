@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-09-30T16:02:01",
+  "device": "arm64 Darwin 15.3",
+  "question": "Where does Surge AI get its operating capital?",
+  "passages": [
+    {
+      "id": "raw/Surge AI - company-research.md#Step 3: Competitive Landscape & Moat#0",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 3: Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "- **Competitors:** **Scale AI** (Meta-backed, ~$29B), Mercor, Turing, Invisible Technologies; Appen/Labelbox (legacy).\n- **Moat:** Early focus on complex, agentic, expert-level data (vs. commodity labeling); proprietary talent-matching → low annotator churn / high quality; extreme capital efficiency + profitability = pricing/independence leverage; deep frontier-lab relationships.\n- **Position:** Quiet market leader by revenue in human data — larger than Scale by 2024 revenue, without raising a dollar.",
+      "score": 7.55,
+      "cosine": 0.452
+    },
+    {
+      "id": "raw/Surge AI - company-research.md#Step 1: Company Snapshot & Business Model#1",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 1: Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "- **Size & Location:** Lean — **~100–120 employees** at the $1B milestone (getlatka lists 121). HQ **San Francisco**; most roles remote.\n- **Customers:** **Anthropic, Google, OpenAI, Meta, Microsoft.**",
+      "score": 4.48,
+      "cosine": 0.453
+    },
+    {
+      "id": "raw/Surge AI - company-research.md#Step 1: Company Snapshot & Business Model#0",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 1: Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "- **What they do:** Human-data company for frontier AI — RLHF/data labeling, **RL environments, evaluations, and an elite expert workforce** that trains and grades the world's top LLMs. \"Human intelligence for AGI.\"\n- **Business Model:** B2B services + platform; bespoke human-data programs + **off-the-shelf (\"OTS\") frontier data and RL environments.** **Profitable from day one; entirely bootstrapped (no VC).**\n- **Stage & Funding:** Founded **2020**. **Zero external funding.** Revenue **>$1B in 2024** (Forbes: $1.2B; The Information first reported), reportedly ~$1.4B run-rate 2025; fielding VC term sheets while staying independent (circulating valuation figures ~$15–30B are **unverified**).",
+      "score": 3.44,
+      "cosine": 0.522
+    },
+    {
+      "id": "raw/David AI - company-research.md#3. Competitive Landscape & Moat#0",
+      "path": "raw/David AI - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Competitor | Category | Why They Compete | David AI Differentiation Angle |\n|---|---|---|---|\n| Scale AI | Direct/indirect AI data infrastructure | Large-scale data labeling, RLHF, and data operations for model companies. | David AI is audio-native and founded by former Scale operators/engineers; its differentiation is specialization and research-driven audio formats. |\n| Surge AI | Direct/indirect premium data provider | Premium human data and data operations for AI labs. | David AI is more narrowly focused on audio, speech-to-speech, multilingual, and voice-interaction data. |",
+      "score": 4.45,
+      "cosine": 0.39
+    },
+    {
+      "id": "raw/David AI - company-research.md#1. Company Snapshot & Business Model#1",
+      "path": "raw/David AI - company-research.md",
+      "section": "1. Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "| Stage & Funding | Series B. Public company announcements show $5M seed in Jan 2025, $25M Series A in May 2025, and $50M Series B in Oct 2025. Approximate public total: $80M. Investors include Meritech, NVIDIA, Alt Capital, First Round Capital, Amplify Partners, Y Combinator, BoxGroup, SV Angel, Liquid 2, and others. |\n| Size & Location | YC profile lists team size of 10, founded in 2024, San Francisco. Some roles list New York as an option. Company site says it is hiring across research, engineering, and operations. |",
+      "score": 5.78,
+      "cosine": 0.372
+    }
+  ],
+  "retrieval": "hybrid: BM25 + embeddinggemma cosine, reciprocal rank fusion",
+  "answer": "Surge AI is entirely bootstrapped and has received zero external funding [S3]. The company is profitable from day one [S3].",
+  "citation_check": {
+    "cited": [
+      "S3"
+    ],
+    "invalid": [],
+    "insufficient": false,
+    "uncited_answer": false,
+    "cited_sources": [
+      "S3 → raw/Surge AI - company-research.md › Step 1: Company Snapshot & Business Model"
+    ]
+  },
+  "stats": {
+    "model": "gemma4:e4b",
+    "execution": "local",
+    "seconds": 6.24,
+    "load_seconds": 0.0,
+    "prompt_tokens": 1076,
+    "output_tokens": 29
+  }
+}

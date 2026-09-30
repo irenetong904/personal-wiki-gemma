@@ -4,7 +4,7 @@ Landing page for my AI-startup company research (Haas MBA, Fall 2026 targeting).
 
 ## Companies
 
-- [[Clay]] — Clay is a GTM data and agentic-automation platform that allows GTM teams to automate prospecting, enrichment, scoring, and outreach.
+- [[Clay]] — Clay is a GTM data and agentic-automation platform that combines data from over 200 providers with AI research agents to automate prospecting, enrichment, scoring, and outreach.
 - [[ClickHouse]] — ClickHouse is a leading open-source, column-oriented OLAP database used for real-time analytics at petabyte scale.
 - [[David AI]] — David AI positions itself as the first audio data research lab, building the data layer required by frontier AI teams for speech, voice-agent, and multimodal AI.
 - [[Decagon]] — Decagon is positioning itself as an enterprise "AI concierge" platform for customer experience, moving beyond being just a chatbot vendor.
@@ -16,7 +16,7 @@ Landing page for my AI-startup company research (Haas MBA, Fall 2026 targeting).
 
 - [[AI Customer Service Agents]] — AI Customer Service Agents are a competitive category featuring direct and adjacent competitors offering various solutions for customer interaction.
 - [[AI Evaluation and Testing]] — AI evaluation and testing involves measuring model impact beyond simple data cleanliness, focusing on how data improves model capabilities.
-- [[AI Training Data]] — David AI focuses on designing, collecting, and productionizing high-quality audio datasets for various AI applications.
+- [[AI Training Data]] — Two companies in my notes sell training and evaluation data to frontier AI labs.
 - [[Agent Building Platforms]] — Agent Building Platforms facilitate the creation and management of AI agents, allowing users to define and deploy complex, automated workflows.
 - [[Enterprise Trust and Compliance]] — Enterprise trust is crucial because customer-facing AI failures can negatively impact brand trust and compliance.
 - [[Pricing and Business Models]] — Several companies utilize usage-based or outcome-based pricing models for their AI/data services.

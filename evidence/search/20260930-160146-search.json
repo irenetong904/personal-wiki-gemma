@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-09-30T16:01:46",
+  "device": "arm64 Darwin 15.3",
+  "question": "outcome-based pricing",
+  "retrieval": "hybrid: BM25 + embeddinggemma cosine, reciprocal rank fusion",
+  "passages": [
+    {
+      "id": "raw/Sierra - company-research.md#Step 6: Hiring Trends & Target Roles Deep-Dive#1",
+      "path": "raw/Sierra - company-research.md",
+      "section": "Step 6: Hiring Trends & Target Roles Deep-Dive",
+      "kind": "raw",
+      "text": "  - **Product Manager / Strategist, Agent Development** — SF/NY/London/Singapore/Sydney\n- **Problem solved now:** operationalize **outcome-based pricing** (novel, hard to model); set territory/quota/comp past $150M ARR; build deal-desk/RFP machine for F50 procurement. Partners: Sales, Strategic Finance, Product, Agent Development delivery org.\n\n---\n*Sources: sierra.ai (site, /about, /careers), live Ashby board (jobs.ashbyhq.com/Sierra), TechCrunch (Feb 2024, Oct 2024, Apr 2026, May 2026). Employee count estimated from open-req volume; CPO/Head-of-Ops names not public.*",
+      "score": 6.8,
+      "cosine": 0.335
+    },
+    {
+      "id": "raw/Sierra - company-research.md#Step 1: Company Snapshot & Business Model#0",
+      "path": "raw/Sierra - company-research.md",
+      "section": "Step 1: Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "- **What they do:** Enterprise conversational AI agents deployed across chat, SMS, WhatsApp, email, voice, and ChatGPT to resolve customer issues and drive revenue.\n- **Business Model:** B2B SaaS with **outcome-based pricing** (\"pay for a job well done\" — pay for resolved outcomes, not seats).\n- **Stage & Funding:** Founded 2023. $175M at $4.5B (Oct 2024) → raising **$950M led by Tiger Global & GV at >$15B post** (May 2026). Prior: Sequoia, Benchmark. **$100M ARR (Nov 2025) → $150M ARR (Feb 2026)**; 40%+ of the Fortune 50 as customers; agents handling \"billions of interactions.\"\n- **Size & Location:** HQ San Francisco; offices NY, Atlanta, London, Singapore, Tokyo, Paris, Madrid, Toronto. In-person culture; ~190 open roles.",
+      "score": 6.34,
+      "cosine": 0.307
+    },
+    {
+      "id": "raw/ClickHouse - company-research.md#Step 1: Company Snapshot & Business Model#0",
+      "path": "raw/ClickHouse - company-research.md",
+      "section": "Step 1: Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "- **What they do:** The leading open-source, column-oriented **OLAP database** for real-time analytics at petabyte scale, now positioned as \"the leading database for AI\" (millisecond queries for agentic systems). Spans real-time analytics, data warehousing, observability (ClickStack), and ML/GenAI.\n- **Business Model:** Open-source core (49k+ GitHub stars) + commercial **ClickHouse Cloud** (managed, **usage/consumption-based** pricing, from ~$50/mo) on AWS/GCP/Azure. Classic OSS-to-cloud PLG + enterprise sales.",
+      "score": 4.28,
+      "cosine": 0.301
+    },
+    {
+      "id": "raw/Decagon - company-research.md#Business Model Implications#0",
+      "path": "raw/Decagon - company-research.md",
+      "section": "Business Model Implications",
+      "kind": "raw",
+      "text": "| Signal | What It Means |\n|---|---|\n| Enterprise logos and case studies | Sales motion is likely high-ACV, proof-of-value heavy, and centered on ROI metrics like deflection, CSAT, cost reduction, revenue, and containment across channels. |\n| Pricing and deal-desk hiring | Monetization is still being refined for enterprise AI agents, likely balancing SaaS subscriptions, usage-based pricing, channel complexity, implementation effort, and business value. |\n| Deployment Strategist hiring | Decagon needs high-touch delivery to make agent deployments work in messy enterprise environments, then convert learnings into scalable playbooks and product features. |",
+      "score": 4.83,
+      "cosine": 0.295
+    },
+    {
+      "id": "raw/Decagon - company-research.md#Risks / Watchouts#0",
+      "path": "raw/Decagon - company-research.md",
+      "section": "Risks / Watchouts",
+      "kind": "raw",
+      "text": "| Risk | Why It Matters |\n|---|---|\n| Services intensity | Large deployment strategist hiring suggests agent deployments are complex. Decagon must turn learnings into repeatable product, or margins and scaling may depend heavily on people. |\n| Incumbent bundling | Salesforce, Zendesk, Intercom, Genesys, and NICE can bundle AI into existing contracts. Decagon must prove superior ROI and speed. |\n| Reliability and governance | Enterprise agents need low failure rates, explainability, auditability, and safe escalation. One public failure can damage trust. |\n| Pricing model uncertainty | AI usage cost, outcome-based pricing, and enterprise willingness to pay are still evolving; Decagon's pricing/BizOps roles suggest this is a live strategic problem. |",
+      "score": 8.06,
+      "cosine": 0.262
+    }
+  ]
+}

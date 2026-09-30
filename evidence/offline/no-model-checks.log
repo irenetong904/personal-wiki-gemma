@@ -1,0 +1,59 @@
+# Error handling with the local model stopped  (2026-09-30 16:25)
+$ brew services stop ollama
+
+$ ./wiki search "outcome-based pricing" -k 2
+search · retrieval only, no answer generated · BM25 keyword only (embeddings 
+unavailable)
+query: outcome-based pricing
+
+╭─ [S1] raw/Decagon - company-research.md › Risks / Watchouts ─────────────────╮
+│ | Risk | Why It Matters |                                                    │
+│ |---|---|                                                                    │
+│ | Services intensity | Large deployment strategist hiring suggests agent     │
+│ deployments are complex. Decagon must turn learnings into repeatable         │
+│ product, or margins and scaling may depend heavily on people. |              │
+│ | Incumbent bundling | Salesforce, Zendesk, Intercom, Genesys, and NICE can  │
+│ bundle AI into existing contracts. Decagon must prove superior ROI and       │
+│ speed. |                                                                     │
+│ | Reliability and governance | Enterprise agents need low failure rates,     │
+│ explainability, auditability, and safe escalation. One public failure can    │
+│ damage trust. |                                                              │
+│ | Pricing model uncertainty | AI usage cost, outcome-based pricing, and      │
+│ enterprise willingness to pay are still evolving; Decagon's pricing/BizOps   │
+│ roles suggest this is a live strategic problem. |                            │
+╰──────────────────────────── bm25 8.06 · original ────────────────────────────╯
+╭─ [S2] raw/Sierra - company-research.md › Step 3: Competitive Landscape & Moa─╮
+│ - **Direct competitors:** Decagon, Intercom (Fin), Parloa, Salesforce        │
+│ Agentforce, Ada, Cresta.                                                     │
+│ - **Indirect:** In-house LLM builds; incumbent CCaaS (Genesys, NICE, Zendesk │
+│ AI).                                                                         │
+│ - **Moat:** Bret Taylor's enterprise distribution/credibility; outcome-based │
+│ pricing aligns vendor/buyer incentives (hard for incumbents to match); full  │
+│ agent lifecycle platform + Ghostwriter; deep compliance (SOC 2, ISO          │
+│ 27001/42001, HIPAA, FedRAMP, PCI DSS).                                       │
+│ - **Position:** Front-running enterprise leader / category-definer in        │
+│ agentic CX; head-to-head with Decagon at the top of the market.              │
+╰──────────────────────────── bm25 7.29 · original ────────────────────────────╯
+exit=0
+
+$ ./wiki ask "What is Sierra's pricing model?"
+ask · model gemma4:e4b · execution local
+
+error: local model unavailable
+Cannot reach Ollama at http://127.0.0.1:11434 (ConnectionError).
+Start it with:  brew services start ollama   (or: ollama serve)
+exit=3
+
+$ ./wiki chat
+error: local model unavailable
+Cannot reach Ollama at http://127.0.0.1:11434 (ConnectionError).
+Start it with:  brew services start ollama   (or: ollama serve)
+exit=3
+
+$ ./wiki ingest vault/raw/missing.md
+error: /Users/tongchienyi/Documents/01_Haas_MBA/02_Class/2nd Year/Agentic AI/class5-personal-wiki/vault/raw/missing.md does not exist
+exit=4
+
+$ ./wiki ask "x" --mode online
+Online mode is not configured in this project. Local mode is the default: omit --mode.
+exit=2
