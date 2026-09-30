@@ -36,7 +36,8 @@ def answer(question: str) -> dict:
 def run(question: str, name: str | None = None) -> dict:
     console = Console()
     console.print(f"[bold]ask[/bold] · model [cyan]{config.MODEL}[/cyan] · execution [green]local[/green]\n")
-    result = answer(question)
+    with console.status("[dim]retrieving passages and asking local Gemma…[/dim]"):
+        result = answer(question)
     console.print(Markdown(result["answer"]))
     c = result["citation_check"]
     console.print()

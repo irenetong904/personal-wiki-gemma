@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-09-30T16:42:02",
+  "device": "arm64 Darwin 15.3",
+  "transcript": [
+    {
+      "role": "user",
+      "content": "what can you help me with?",
+      "retrieved": "False (conversational)"
+    },
+    {
+      "role": "assistant",
+      "content": "Hey Irene! I'm Sage, your study buddy and personal wiki assistant for your Haas MBA research on those AI startups (Clay, ClickHouse, David AI, Decagon, Harvey AI, Sierra, Surge AI). 😊\n\nBasically, I can help you with:\n\n*   **Brainstorming & Drafting:** Outlining, rewriting, or drafting emails and project ideas.\n*   **Summarizing & Organizing:** Condensing notes or creating study plans.\n*   **Wiki Lookups:** I can search your personal research notes (in your wiki) to pull up info on any of those companies or concepts!\n\nIf you need me to check your notes, just tell me what you're looking for. If I use your notes, I'll always cite where the info came from!\n\nAlso, remember you can use commands like `/save` to draft replies or `/sources` to see what I pulled from your notes!\n\nWhat part of the research are you tackling today?",
+      "sources": []
+    },
+    {
+      "role": "user",
+      "content": "Give me a 3-bullet summary of Sierra from my notes",
+      "retrieved": "True (mentions notes/course)"
+    },
+    {
+      "role": "assistant",
+      "content": "Here is a 3-bullet summary of Sierra based on your notes:\n\n*   **Offering:** Sierra provides enterprise conversational AI agents that are deployed across various channels (chat, SMS, voice, etc.) to resolve customer issues and drive revenue [S2, S4].\n*   **Business Model & Moat:** They operate on a B2B SaaS model featuring outcome-based pricing, which aligns vendor incentives with actual achieved customer outcomes [S2, S4]. Their moat is further supported by deep compliance certifications like SOC 2 and HIPAA [S3].\n*   **Strategy:** The company is focused on becoming a global standard for AI-powered Customer Experience (CX) and is strategically expanding its capabilities to include internal enterprise agents [S1, S4].\n\nDoes this summary capture the main points you were looking for, or should we dive deeper into their product modules like Agent Studio?",
+      "sources": [
+        "wiki/Companies/Sierra.md › Key points",
+        "wiki/Companies/Sierra.md › Key points",
+        "wiki/Concepts/AI Customer Service Agents.md › Details",
+        "wiki/Companies/Sierra.md › Sierra"
+      ]
+    },
+    {
+      "role": "user",
+      "content": "make that shorter",
+      "retrieved": "False (follow-up, reusing previous notes)"
+    },
+    {
+      "role": "assistant",
+      "content": "Got it. Let's condense that into a super sharp summary.\n\n**Sierra Snapshot:**\n\n*   **What they do:** Provide enterprise conversational AI agents for customer service across channels like chat, voice, and SMS [S4].\n*   **How they make money:** They use a B2B SaaS model with outcome-based pricing, meaning they get paid based on resolved customer issues [S4, S2].\n*   **Key strengths:** Their moat includes deep compliance (like HIPAA) and a platform designed to become the global standard for CX, now expanding to internal enterprise use [S3, S1, S4].\n\nHow does this shorter version feel for your outline?",
+      "sources": [
+        "wiki/Companies/Sierra.md › Key points",
+        "wiki/Companies/Sierra.md › Key points",
+        "wiki/Concepts/AI Customer Service Agents.md › Details",
+        "wiki/Companies/Sierra.md › Sierra"
+      ]
+    }
+  ],
+  "stats": {
+    "model": "gemma4:e4b",
+    "execution": "local"
+  }
+}

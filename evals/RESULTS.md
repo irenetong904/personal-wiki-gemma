@@ -125,7 +125,25 @@ $4.5B valuation into an ARR figure, and it did not borrow another company's numb
 | Ask after the chat claim | [`offline-chat-claim-not-evidence`](../evidence/ask/20260930-160405-offline-chat-claim-not-evidence.md) | still insufficient evidence | `INSUFFICIENT EVIDENCE…` (the $300M claim is not used) | ✅ |
 | Ask with Ollama stopped | [`no-model log`](../evidence/offline/no-model-checks.log) | clear error | `error: local model unavailable … Start it with: brew services start ollama`, exit 3 | ✅ |
 
-¹ The shortened reply reuses `[S3]`, `[S4]` from the previous turn. The labels are per-turn and the follow-up turn had no
+### Hand-typed chat test (after the offline run): a failure found and fixed
+| Step | Evidence | Result |
+|---|---|---|
+| Irene typed "what can you help me with?" → "Give me a 3-bullet summary of Sierra from my notes" → "make that shorter" | [transcript](../evidence/mode_checks/20260930-163956-chat.md), [screenshot](../evidence/screenshots/07-chat-interactive-BUG-fabricated-citations.png) | ❌ **FAIL: fabricated citations.** The notes request was routed `retrieval: no` because "bullet" matched the reply-edit rule, which ran before the "my notes" rule. Given no passages, Gemma still wrote `[S1]`–`[S3]` and invented content ("reason about the environment and adapt its plan" is not in the notes). |
+| Fix | [`wikicli/modes/chat.py`](../wikicli/modes/chat.py), [`persona.md`](../instructions/persona.md), [tests](../tests/test_harness.py) | Notes and company-name cues now take precedence. Reply edits reuse the previous turn's passages. The **harness warns** whenever `[S#]` appears without passages or points past them. Persona rule: never cite without passages. The failure is now a regression test. |
+| Same three messages again | [re-test transcript](../evidence/mode_checks/20260930-164202-fix-check-chat-bullet.md) | ✅ `retrieval: yes` with 4 real passages; every `[S#]` resolves; the follow-up reuses them |
+
+**Scripted chat checks rerun after the fix** ([capabilities](../evidence/mode_checks/20260930-164321-rerun-chat-capabilities.md), [follow-up](../evidence/mode_checks/20260930-164514-rerun-chat-followup.md)
+`*-rerun-chat-*`):
+- Capability questions: still `retrieval: no`.
+- Notes-based draft: `retrieval: yes`.
+- "make that shorter": reuses the previous passages.
+- "Decagon's ARR was $300M": now `retrieval: yes (mentions Decagon)`, and Sage answers that it doesn't see that ARR figure
+  in passages [S1]–[S4] and calls it unverified. This resolves caveat ² below.
+
+The scripted offline chat checks never hit this path: their notes request said "based on my notes" and contained no
+edit word. A single hand-typed test found it.
+
+¹ (Before the fix above) the shortened reply reused `[S3]`, `[S4]` from the previous turn. The labels are per-turn and the follow-up turn had no
 new passages, so readers must look at the previous turn's sources (`/sources`).
 ² The reply opens with "I can incorporate that into our notes if you'd like", which overstates its abilities (chat cannot write to
 the wiki), but it then states the correct boundary. In the earlier dry run it simply said "noted", even with the persona

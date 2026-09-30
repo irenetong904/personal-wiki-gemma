@@ -207,11 +207,14 @@ The two longest files (David AI, Decagon) are split into two calls whose outputs
 - **Fallback:** BM25 alone is used if Ollama is down.
 
 **When chat retrieves.** A rule-based router in [`chat.py`](wikicli/modes/chat.py) decides per turn:
-- **Never** for greetings, capability questions ("what can you help me with?"), or edits of the previous reply ("make that shorter", "rewrite").
-- **Always** when the message mentions notes, a company, a class, or similar cues.
-- **Otherwise**, only for a question with a strong keyword match (BM25 ≥ 6) in `raw/`.
+1. **Search** when the message mentions "my notes", the wiki, a class, or one of the 7 companies. This rule is checked first.
+2. **Reuse the previous turn's passages** for edits of the last reply ("make that shorter", "rewrite", "bullet"), so `[S#]` labels stay valid.
+3. **No search** for greetings and capability questions ("what can you help me with?").
+4. **Otherwise**, search only for a question with a strong keyword match (BM25 ≥ 6) in `raw/`.
 
-Every turn prints the decision and its reason.
+Every turn prints the decision and its reason. A **harness-level citation guard** flags any reply that writes `[S#]`
+without passages, or cites a passage that was not given. The rule order and the guard came from a failure in a
+hand-typed test (§6).
 
 **Personality vs. research rules.** "Sage" (warm, concise study buddy) exists only in `persona.md`. That file also lists
 exactly what the assistant can and cannot do, so capability answers are accurate. Ask mode never loads it.
@@ -269,6 +272,7 @@ Both were fixed, and all four tests were rerun.
 | chat: "what can we do?", "what can you help me with?" | `retrieval: no`; accurate capabilities and commands; no refusal ([transcript](evidence/mode_checks/20260930-160253-offline-chat-capabilities.md)) |
 | chat: draft a 5-step plan "based on my notes" → "make that shorter" | first turn `retrieval: yes` with citations; follow-up `retrieval: no`, shortened from the conversation ([transcript](evidence/mode_checks/20260930-160403-offline-chat-followup.md)) |
 | chat claim "Decagon's ARR was $300M" → standalone `ask` | chat labeled it as user-provided and not in the wiki; ask still answered **INSUFFICIENT EVIDENCE** ([card](evidence/ask/20260930-160405-offline-chat-claim-not-evidence.md)) |
+| **hand-typed chat** (after the offline run) | ❌ first attempt: "Give me a 3-bullet summary of Sierra from my notes" skipped retrieval ("bullet" matched the edit rule), and Gemma **fabricated `[S1]`–`[S3]` citations** ([screenshot](evidence/screenshots/07-chat-interactive-BUG-fabricated-citations.png), [transcript](evidence/mode_checks/20260930-163956-chat.md)). ✅ after the fix: `retrieval: yes`, real passages, valid labels, and the follow-up reuses them ([re-test](evidence/mode_checks/20260930-164202-fix-check-chat-bullet.md)). Details in [RESULTS](evals/RESULTS.md#hand-typed-chat-test-after-the-offline-run-a-failure-found-and-fixed) |
 | error handling | model stopped → `ask`/`chat` exit 3 with the fix; missing file → exit 4; `--mode online` → "not configured" ([log](evidence/offline/no-model-checks.log)) |
 
 ### Offline demonstration
@@ -336,9 +340,24 @@ passage, but the claim went beyond it. **A citation shows where the model looked
   a cheap first version would already catch both errors: every number and proper noun in a sentence must appear in the
   text of the passage it cites. "HIPAA" is not in the Harvey passage, and "revenue" is not attached to "~$29B".
 
+**Second real failure: fabricated citations in chat, found by typing by hand.** All scripted checks passed, but the
+first hand-typed request, "Give me a 3-bullet summary of Sierra from my notes", went wrong in two steps:
+- **Harness bug:** the router checked its "edit the previous reply" rule (which matched "bullet") before its "my notes" rule, so no passages were retrieved.
+- **Model behavior:** with no evidence and a persona that talks about citing notes, Gemma wrote `[S1]`–`[S3]` anyway and summarized Sierra as an agent that "reasons about the environment". None of that is in the notes.
+
+Fixes:
+- Rule order: notes and company cues win.
+- Follow-ups reuse the previous passages.
+- The harness now flags `[S#]` markers that have no matching passages, instead of trusting the model.
+- A "never cite without passages" persona rule.
+- A regression test for this exact message.
+
+Lesson: scripted tests share the author's phrasing. One real user message exercised a path none of them did.
+
 **Other observed limitations:**
 - Chat follows the "flag unverified user claims" rule inconsistently. The ask/chat boundary is enforced by the harness,
   not the prompt.
-- Chat reuses `[S#]` labels from the previous turn on follow-ups.
-- The chat retrieval router is rule-based, so an unusual phrasing about the notes may skip retrieval.
+- The chat retrieval router is still rule-based, so an unusual phrasing about the notes may skip retrieval. The citation
+  guard now makes this visible instead of silent. A small classifier call, or always retrieving and letting the model
+  ignore irrelevant passages, would be the next step.
 - Chat turns take 11–35 s on this laptop.

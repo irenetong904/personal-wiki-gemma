@@ -106,6 +106,13 @@ class HarnessTest(unittest.TestCase):
         for msg in ["what can you help me with?", "what can we do?", "make that shorter"]:
             self.assertFalse(chat.needs_retrieval(msg)[0], msg)
         self.assertTrue(chat.needs_retrieval("what do my notes say about pricing?")[0])
+        # regression: an interactive test containing "bullet" skipped retrieval and got fabricated [S#] citations
+        self.assertTrue(chat.needs_retrieval("Give me a 3-bullet summary of Acme Robotics from my notes")[0])
+        self.assertTrue(chat.needs_retrieval("How does Beta Labs charge customers")[0])  # company name alone
+        self.assertEqual(chat.needs_retrieval("make that shorter"), (False, "follow-up"))
+        self.assertIsNotNone(chat.citation_warning("Acme builds robots [S1].", []))      # no passages given
+        self.assertIsNotNone(chat.citation_warning("see [S3]", [{"path": "x"}]))         # label out of range
+        self.assertIsNone(chat.citation_warning("see [S1]", [{"path": "x"}]))
 
 
 if __name__ == "__main__":
