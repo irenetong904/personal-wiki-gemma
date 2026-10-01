@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-09-30T16:54:06",
+  "device": "arm64 Darwin 15.3",
+  "question": "Where does Surge AI get its operating capital?",
+  "passages": [
+    {
+      "id": "raw/Surge AI - company-research.md#Step 3: Competitive Landscape & Moat#0",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 3: Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "- **Competitors:** **Scale AI** (Meta-backed, ~$29B), Mercor, Turing, Invisible Technologies; Appen/Labelbox (legacy).\n- **Moat:** Early focus on complex, agentic, expert-level data (vs. commodity labeling); proprietary talent-matching → low annotator churn / high quality; extreme capital efficiency + profitability = pricing/independence leverage; deep frontier-lab relationships.\n- **Position:** Quiet market leader by revenue in human data — larger than Scale by 2024 revenue, without raising a dollar.",
+      "score": 7.55
+    },
+    {
+      "id": "raw/David AI - company-research.md#1. Company Snapshot & Business Model#1",
+      "path": "raw/David AI - company-research.md",
+      "section": "1. Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "| Stage & Funding | Series B. Public company announcements show $5M seed in Jan 2025, $25M Series A in May 2025, and $50M Series B in Oct 2025. Approximate public total: $80M. Investors include Meritech, NVIDIA, Alt Capital, First Round Capital, Amplify Partners, Y Combinator, BoxGroup, SV Angel, Liquid 2, and others. |\n| Size & Location | YC profile lists team size of 10, founded in 2024, San Francisco. Some roles list New York as an option. Company site says it is hiring across research, engineering, and operations. |",
+      "score": 5.78
+    },
+    {
+      "id": "raw/Decagon - company-research.md#Leadership / Culture Signals#0",
+      "path": "raw/Decagon - company-research.md",
+      "section": "Leadership / Culture Signals",
+      "kind": "raw",
+      "text": "| Signal | Interpretation |\n|---|---|\n| Values: Just Get It Done, Invent What Customers Want, Winner's Mindset, The Polymath Principle | Decagon likely rewards speed, customer obsession, high ownership, cross-functional curiosity, and comfort working outside a narrow lane. |\n| In-office company | Expect high-cadence collaboration, fast feedback loops, and preference for candidates in major offices. |\n| \"Polymath Principle\" | Good fit for candidates who can connect analytics, GTM, product, customer operations, and AI workflows. |",
+      "score": 5.66
+    },
+    {
+      "id": "raw/Harvey AI - company-research.md#Step 3: Competitive Landscape & Moat#0",
+      "path": "raw/Harvey AI - company-research.md",
+      "section": "Step 3: Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "- **Competitors:** Legora, Robin AI, Spellbook (contract-focused), Thomson Reuters CoCounsel/Casetext, LexisNexis (Protégé); horizontal LLMs (OpenAI/Anthropic) used directly by firms.\n- **Moat:** Deep enterprise trust (SOC2 II, ISO 27001/27701/42001, GDPR, AIUC-1); embedded legal-engineering teams → high switching costs; marquee logo density (majority of AmLaw 100); strategic capital + distribution (Sequoia, GIC, Goldman, JPM, Microsoft); proprietary legal benchmarks.\n- **Position:** Clear category leader in legal AI by funding, valuation, and enterprise penetration.",
+      "score": 4.96
+    },
+    {
+      "id": "raw/Surge AI - company-research.md#Step 1: Company Snapshot & Business Model#1",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 1: Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "- **Size & Location:** Lean — **~100–120 employees** at the $1B milestone (getlatka lists 121). HQ **San Francisco**; most roles remote.\n- **Customers:** **Anthropic, Google, OpenAI, Meta, Microsoft.**",
+      "score": 4.48
+    }
+  ],
+  "retrieval": "BM25 keyword only (embeddings unavailable)",
+  "answer": "INSUFFICIENT EVIDENCE: the wiki does not contain information about where Surge AI gets its operating capital.",
+  "citation_check": {
+    "cited": [],
+    "invalid": [],
+    "insufficient": true,
+    "uncited_answer": false,
+    "cited_sources": []
+  },
+  "stats": {
+    "model": "gemma4:e4b",
+    "execution": "local",
+    "seconds": 3.96,
+    "load_seconds": 0.0,
+    "prompt_tokens": 1034,
+    "output_tokens": 22
+  }
+}

@@ -6,14 +6,14 @@
       "sha256": "4ef7519e28079f90f9913bbdd056b8a4eb16811798e3155d5a0721959ab1f766",
       "title": "Clay",
       "folder": "Companies",
-      "summary": "Clay is a GTM data and agentic-automation platform that combines data from over 200 providers with AI research agents to automate prospecting, enrichment, scoring, and outreach. The company operates on a self-serve and enterprise SaaS model, utilizing credit-based usage pricing.",
+      "summary": "Clay is a GTM data and agentic-automation platform that helps GTM teams automate prospecting, enrichment, scoring, and outreach. It combines data from over 200 providers with AI research agents like Claygent and orchestration tools. The company operates on a self-serve and enterprise SaaS model using credit-based usage pricing.",
       "key_points": [
         {
-          "point": "Combines 1st/3rd-party data from 200+ providers, AI research agents (Claygent), and orchestration tools.",
+          "point": "Combines 1st/3rd-party data from 200+ providers, AI agents (Claygent), and orchestration.",
           "section": "Step 1: Company Snapshot & Business Model"
         },
         {
-          "point": "Business model is self-serve and enterprise SaaS, using credit-based usage pricing.",
+          "point": "Business Model is self-serve + enterprise SaaS with credit-based usage pricing.",
           "section": "Step 1: Company Snapshot & Business Model"
         },
         {
@@ -21,26 +21,38 @@
           "section": "Step 2: Product Portfolio Deep-Dive"
         },
         {
-          "point": "Clay's moat includes an aggregator moat from 200+ vendors and a category-creation community moat.",
+          "point": "Its moat includes an aggregator moat from 200+ vendors and a category-creation community moat.",
           "section": "Step 3: Competitive Landscape & Moat"
+        },
+        {
+          "point": "Strategic focus is to become the orchestration layer/operating system for GTM.",
+          "section": "Step 4: Future Goals & Growth Opportunities"
+        },
+        {
+          "point": "Key roles are GTM Engineer and Enterprise Growth Strategist.",
+          "section": "Step 6: Hiring Trends & Target Roles Deep-Dive"
         }
       ],
       "concepts": [
         {
           "name": "Agentic Automation",
-          "why": "The platform uses AI research agents, like Claygent, to automate complex GTM tasks."
+          "why": "The platform utilizes AI research agents like Claygent to automate GTM tasks."
         },
         {
           "name": "GTM Engineering",
-          "why": "Clay has created a new category by minting the 'GTM Engineer' role to build automated GTM systems."
+          "why": "Clay has created and defined the 'GTM Engineer' role within its ecosystem."
         },
         {
-          "name": "Waterfall Enrichment",
-          "why": "The platform utilizes waterfall enrichment by combining data from over 200 different providers."
+          "name": "Data Aggregation",
+          "why": "Clay aggregates data from over 200 different providers to offer comprehensive coverage."
+        },
+        {
+          "name": "Orchestration Layer",
+          "why": "Clay positions itself as the layer that turns raw data into actionable outcomes for GTM teams."
         }
       ],
       "model": "gemma4:e4b",
-      "ingested_at": "2026-09-30T16:01:19"
+      "ingested_at": "2026-09-30T16:53:40"
     },
     "raw/ClickHouse - company-research.md": {
       "source_id": "raw/ClickHouse - company-research.md",

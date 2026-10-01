@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-09-30T16:54:11",
+  "device": "arm64 Darwin 15.3",
+  "question": "Which AI data companies list Scale AI as a competitor?",
+  "passages": [
+    {
+      "id": "raw/David AI - company-research.md#3. Competitive Landscape & Moat#0",
+      "path": "raw/David AI - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Competitor | Category | Why They Compete | David AI Differentiation Angle |\n|---|---|---|---|\n| Scale AI | Direct/indirect AI data infrastructure | Large-scale data labeling, RLHF, and data operations for model companies. | David AI is audio-native and founded by former Scale operators/engineers; its differentiation is specialization and research-driven audio formats. |\n| Surge AI | Direct/indirect premium data provider | Premium human data and data operations for AI labs. | David AI is more narrowly focused on audio, speech-to-speech, multilingual, and voice-interaction data. |",
+      "score": 13.72
+    },
+    {
+      "id": "raw/David AI - company-research.md#Sources#0",
+      "path": "raw/David AI - company-research.md",
+      "section": "Sources",
+      "kind": "raw",
+      "text": "- David AI homepage: https://www.withdavid.ai/\n- David AI jobs / YC company profile: https://www.ycombinator.com/companies/david-ai/jobs\n- David AI Series B announcement: https://www.withdavid.ai/news/announcing-our-50m-series-b\n- David AI Series A announcement: https://www.withdavid.ai/news/announcing-our-25m-series-a\n- David AI seed announcement: https://www.withdavid.ai/news/announcing-our-5m-seed-round-led-by-first-round\n- Data Product Operations Lead JD: https://www.ycombinator.com/companies/david-ai/jobs/cKdFdzD-data-product-operations-lead\n- Growth Operations Lead JD: https://www.ycombinator.com/companies/david-ai/jobs/QeG7476-growth-operations-lead\n- General Manager, Data Operations JD: https://www.ycombinator.com/companies/david-ai/jobs/jk323Mg-general-manager-data-operations",
+      "score": 9.64
+    },
+    {
+      "id": "raw/David AI - company-research.md#1. Company Snapshot & Business Model#2",
+      "path": "raw/David AI - company-research.md",
+      "section": "1. Company Snapshot & Business Model",
+      "kind": "raw",
+      "text": "| Target Audience / Key Customers | Frontier AI labs, Mag 7 / FAANG companies, and enterprises building production audio AI. The Series B post says David AI works with several Mag 7 companies and most leading AI labs; the Series A post says it supports most Mag 7 companies and nearly every leading audio AI lab. |",
+      "score": 9.37
+    },
+    {
+      "id": "raw/Decagon - company-research.md#3. Competitive Landscape & Moat#0",
+      "path": "raw/Decagon - company-research.md",
+      "section": "3. Competitive Landscape & Moat",
+      "kind": "raw",
+      "text": "| Competitor | Category | Why They Compete | Decagon Differentiation Angle |\n|---|---|---|---|\n| Sierra | Direct AI CX agent competitor | Enterprise AI agents for customer service and customer operations. | Decagon emphasizes AOPs, fast iteration, broad deployment strategist function, and measurable enterprise case studies. |\n| Intercom Fin | Direct/adjacent | AI support agent inside Intercom's support platform, strong for digital-first support teams. | Decagon is more enterprise/custom and omnichannel across voice/chat/email/SMS, with heavier deployment and integration motion. |",
+      "score": 8.71
+    },
+    {
+      "id": "raw/Surge AI - company-research.md#Step 6: Hiring Trends & Target Roles Deep-Dive#1",
+      "path": "raw/Surge AI - company-research.md",
+      "section": "Step 6: Hiring Trends & Target Roles Deep-Dive",
+      "kind": "raw",
+      "text": "  - **Data Science, Growth**; **AI Programs Analyst (Finance Domain)**; **Business Analyst**; **Program Manager**; **Strategic Partnerships Manager**.\n- **Note:** JDs list \"MBA a plus.\" A **part-time consultant / research fellowship** path (remote) is a real in-semester door.\n\n---\n*Sources: surgehq.ai (site, /careers, /products, /ots, individual JDs), Forbes, Inc., Lenny's Newsletter, Wikipedia, getlatka. Caveat: revenue/valuation figures from secondary reporting (flagged unverified); no public exec roster beyond CEO.*",
+      "score": 7.41
+    }
+  ],
+  "retrieval": "BM25 keyword only (embeddings unavailable)",
+  "answer": "Scale AI is listed as a competitor to David AI [S1]. Surge AI is listed as a competitor to David AI [S1].",
+  "citation_check": {
+    "cited": [
+      "S1"
+    ],
+    "invalid": [],
+    "insufficient": false,
+    "uncited_answer": false,
+    "cited_sources": [
+      "S1 → raw/David AI - company-research.md › 3. Competitive Landscape & Moat"
+    ]
+  },
+  "stats": {
+    "model": "gemma4:e4b",
+    "execution": "local",
+    "seconds": 5.0,
+    "load_seconds": 0.0,
+    "prompt_tokens": 1133,
+    "output_tokens": 29
+  }
+}

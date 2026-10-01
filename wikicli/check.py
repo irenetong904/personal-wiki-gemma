@@ -42,5 +42,9 @@ def run() -> int:
                 heads = {_norm(h) for h in re.findall(r"^#{1,6}\s+(.+)$", (config.VAULT / t).read_text(encoding="utf-8"), re.M)}
                 if _norm(anchor) not in heads:
                     print(f"ANCHOR   {rel}: [[{t}#{anchor}]] heading not found"); problems += 1
-    print(f"\nchecked {len(notes)} notes · {problems} problem(s)")
+    from . import retrieval
+    if not retrieval.embeddings_ready():
+        print("INDEX    semantic vectors missing or stale: search/ask would use BM25 only; re-run ./wiki ingest vault/raw")
+        problems += 1
+    print(f"\nchecked {len(notes)} notes + retrieval index · {problems} problem(s)")
     return problems

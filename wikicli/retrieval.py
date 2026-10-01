@@ -27,14 +27,34 @@ def tokenize(text: str) -> list[str]:
 
 
 # ---------- local embeddings (optional) ----------
-def _embed(texts: list[str]) -> np.ndarray | None:
-    try:
-        import ollama
-        resp = ollama.Client(host=config.OLLAMA_HOST).embed(model=config.EMBED_MODEL, input=texts)
-        v = np.array(resp["embeddings"], dtype=np.float32)
-        return v / np.linalg.norm(v, axis=1, keepdims=True)
-    except Exception:
-        return None
+EMBED_BATCH = 32  # small batches + retries: one 197-passage request failed transiently under memory pressure
+
+
+def _embed(texts: list[str], retries: int = 3) -> np.ndarray | None:
+    import time
+    import ollama
+    client = ollama.Client(host=config.OLLAMA_HOST)
+    out = []
+    for start in range(0, len(texts), EMBED_BATCH):
+        batch = texts[start:start + EMBED_BATCH]
+        for attempt in range(retries):
+            try:
+                out += client.embed(model=config.EMBED_MODEL, input=batch)["embeddings"]
+                break
+            except Exception:
+                if attempt == retries - 1:
+                    return None
+                time.sleep(2 * (attempt + 1))
+    v = np.array(out, dtype=np.float32)
+    return v / np.linalg.norm(v, axis=1, keepdims=True)
+
+
+def embeddings_ready() -> bool:
+    """True when every passage in chunks.jsonl has a stored EmbeddingGemma vector."""
+    if not (config.EMBED_FILE.exists() and config.CHUNKS_FILE.exists()):
+        return False
+    n = sum(1 for l in config.CHUNKS_FILE.read_text(encoding="utf-8").splitlines() if l.strip())
+    return len(np.load(config.EMBED_FILE)) == n
 
 
 def _doc_text(c: dict) -> str:
@@ -57,8 +77,12 @@ def build_index() -> int:
     vecs = _embed([_doc_text(c) for c in chunks]) if chunks else None
     if vecs is not None:
         np.save(config.EMBED_FILE, vecs)
-    elif config.EMBED_FILE.exists():
-        config.EMBED_FILE.unlink()  # never keep vectors that no longer match chunks.jsonl
+    else:
+        if config.EMBED_FILE.exists():
+            config.EMBED_FILE.unlink()  # never keep vectors that no longer match chunks.jsonl
+        # Offline run 2 degraded silently here; say it loudly instead.
+        print(f"WARNING: could not build {config.EMBED_MODEL} vectors; search/ask will use BM25 keywords only "
+              "(paraphrased questions may fail). Re-run ./wiki ingest vault/raw once Ollama is healthy.")
     return len(chunks)
 
 

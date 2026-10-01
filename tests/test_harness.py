@@ -51,7 +51,9 @@ class HarnessTest(unittest.TestCase):
             # a 2-file corpus gives BM25 near-zero IDF, so the production floor (tuned on 7 files) is lowered
             "MIN_SCORE": 0.01}.items()]
         self.patches += [mock.patch("wikicli.llm.chat", fake_chat), mock.patch("wikicli.llm.check_model", lambda: None),
-                         mock.patch("wikicli.retrieval._embed", lambda texts: None)]
+                         mock.patch("wikicli.retrieval._embed", lambda texts: None),
+                         # no embedding model in tests; check() reports missing vectors separately (tested below)
+                         mock.patch("wikicli.retrieval.embeddings_ready", lambda: True)]
         for p in self.patches:
             p.start()
 

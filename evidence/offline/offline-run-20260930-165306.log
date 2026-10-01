@@ -1,0 +1,325 @@
+
+================================================================
+=== 0. Network status (must be offline)
+================================================================
+Wed Sep 30 16:53:06 PDT 2026
+Wi-Fi Power (en0): Off
+INTERNET: UNREACHABLE (offline confirmed)
+
+================================================================
+=== 1. Device, runtime, model
+================================================================
+Apple M4
+RAM: 16 GB
+15.3
+ollama version is 0.34.4
+NAME                     ID              SIZE      MODIFIED     
+embeddinggemma:latest    85462619ee72    621 MB    18 hours ago    
+gemma4:e4b               dc35e8d9c606    6.6 GB    18 hours ago    
+  Model
+    architecture        gemma4    
+    parameters          7.5B      
+    context length      131072    
+    embedding length    2560      
+    quantization        Q4_K_M    
+    requires            0.30.9    
+
+
+================================================================
+=== 2. Restart: fresh CLI process, model unloaded
+================================================================
+NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL 
+usage: wiki [-h] {ingest,search,ask,chat,check,help} ...
+
+Personal wiki CLI: local Gemma + RAG over your own notes.
+
+positional arguments:
+  {ingest,search,ask,chat,check,help}
+    ingest              build/update wiki pages from raw sources
+    search              show matching original passages (no model)
+    ask                 grounded factual answer with citations
+    chat                talk with your personal assistant
+    check               lint vault links and note names
+    help                show this help
+
+options:
+  -h, --help            show this help message and exit
+
+modes:
+  ingest   read vault/raw, have local Gemma write linked notes in vault/wiki, rebuild index.md + search index
+  search   show original matching passages and paths (retrieval only, no model — works with Ollama stopped)
+  ask      standalone factual answer from retrieved evidence, with [S#] citations or INSUFFICIENT EVIDENCE
+  chat     personal assistant 'Sage' with conversation memory; searches notes only when useful
+  check    verify every [[link]] in the vault resolves and note names are readable
+
+configuration:
+  model     gemma4:e4b   (override with WIKI_MODEL=...)
+  runtime   Ollama at http://127.0.0.1:11434   (start: brew services start ollama)
+  vault     vault/   · machine data in data/
+
+examples:
+  ./wiki ingest vault/raw
+  ./wiki search "workshop location"
+  ./wiki ask "Where is the workshop?"
+  ./wiki chat
+
+================================================================
+=== 3. CLI ingestion offline: ./wiki ingest "vault/raw/Clay - company-research.md" --force
+================================================================
+gemma  summarizing raw/Clay - company-research.md ...
+  → wiki/Companies/Clay.md
+
+done · 7 sources · 13 wiki notes · 197 passages indexed
+  wiki/Companies/Clay.md
+  wiki/Companies/ClickHouse.md
+  wiki/Companies/David AI.md
+  wiki/Companies/Decagon.md
+  wiki/Companies/Harvey AI.md
+  wiki/Companies/Sierra.md
+  wiki/Companies/Surge AI.md
+  wiki/Concepts/AI Customer Service Agents.md
+  wiki/Concepts/AI Evaluation and Testing.md
+  wiki/Concepts/AI Training Data.md
+  wiki/Concepts/Agent Building Platforms.md
+  wiki/Concepts/Enterprise Trust and Compliance.md
+  wiki/Concepts/Pricing and Business Models.md
+       43.78 real         0.20 user         0.10 sys
+            55377920  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               12505  page reclaims
+                1187  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   8  messages sent
+                  34  messages received
+                   0  signals received
+                 807  voluntary context switches
+                1034  involuntary context switches
+          2749420597  instructions retired
+          1029572236  cycles elapsed
+            53789248  peak memory footprint
+NAME                     ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+gemma4:e4b               dc35e8d9c606    315 MB    100% GPU     8192       9 minutes from now    
+embeddinggemma:latest    85462619ee72    679 MB    100% GPU     2048       4 minutes from now    
+
+checked 14 notes · 0 problem(s)
+
+================================================================
+=== 4. Search mode (retrieval only, no answer generated)
+================================================================
+search · retrieval only, no answer generated · BM25 keyword only (embeddings unavailable)
+query: outcome-based pricing
+
+╭─ [S1] raw/Decagon - company-research.md › Risks / Watchouts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ | Risk | Why It Matters |                                                                                                                                                                                  │
+│ |---|---|                                                                                                                                                                                                  │
+│ | Services intensity | Large deployment strategist hiring suggests agent deployments are complex. Decagon must turn learnings into repeatable product, or margins and scaling may depend heavily on        │
+│ people. |                                                                                                                                                                                                  │
+│ | Incumbent bundling | Salesforce, Zendesk, Intercom, Genesys, and NICE can bundle AI into existing contracts. Decagon must prove superior ROI and speed. |                                                │
+│ | Reliability and governance | Enterprise agents need low failure rates, explainability, auditability, and safe escalation. One public failure can damage trust. |                                         │
+│ | Pricing model uncertainty | AI usage cost, outcome-based pricing, and enterprise willingness to pay are still evolving; Decagon's pricing/BizOps roles suggest this is a live strategic problem. |       │
+╰─────────────────────────────────────────────────────────────────────────────────────────── bm25 8.06 · original ───────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ [S2] raw/Sierra - company-research.md › Step 3: Competitive Landscape & Moat ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ - **Direct competitors:** Decagon, Intercom (Fin), Parloa, Salesforce Agentforce, Ada, Cresta.                                                                                                             │
+│ - **Indirect:** In-house LLM builds; incumbent CCaaS (Genesys, NICE, Zendesk AI).                                                                                                                          │
+│ - **Moat:** Bret Taylor's enterprise distribution/credibility; outcome-based pricing aligns vendor/buyer incentives (hard for incumbents to match); full agent lifecycle platform + Ghostwriter; deep      │
+│ compliance (SOC 2, ISO 27001/42001, HIPAA, FedRAMP, PCI DSS).                                                                                                                                              │
+│ - **Position:** Front-running enterprise leader / category-definer in agentic CX; head-to-head with Decagon at the top of the market.                                                                      │
+╰─────────────────────────────────────────────────────────────────────────────────────────── bm25 7.29 · original ───────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ [S3] raw/Sierra - company-research.md › Step 6: Hiring Trends & Target Roles Deep-Dive ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│   - **Product Manager / Strategist, Agent Development** — SF/NY/London/Singapore/Sydney                                                                                                                    │
+│ - **Problem solved now:** operationalize **outcome-based pricing** (novel, hard to model); set territory/quota/comp past $150M ARR; build deal-desk/RFP machine for F50 procurement. Partners: Sales,      │
+│ Strategic Finance, Product, Agent Development delivery org.                                                                                                                                                │
+│                                                                                                                                                                                                            │
+│ ---                                                                                                                                                                                                        │
+│ *Sources: sierra.ai (site, /about, /careers), live Ashby board (jobs.ashbyhq.com/Sierra), TechCrunch (Feb 2024, Oct 2024, Apr 2026, May 2026). Employee count estimated from open-req volume;              │
+│ CPO/Head-of-Ops names not public.*                                                                                                                                                                         │
+╰─────────────────────────────────────────────────────────────────────────────────────────── bm25 6.8 · original ────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ [S4] raw/Sierra - company-research.md › Step 1: Company Snapshot & Business Model ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ - **What they do:** Enterprise conversational AI agents deployed across chat, SMS, WhatsApp, email, voice, and ChatGPT to resolve customer issues and drive revenue.                                       │
+│ - **Business Model:** B2B SaaS with **outcome-based pricing** ("pay for a job well done" — pay for resolved outcomes, not seats).                                                                          │
+│ - **Stage & Funding:** Founded 2023. $175M at $4.5B (Oct 2024) → raising **$950M led by Tiger Global & GV at >$15B post** (May 2026). Prior: Sequoia, Benchmark. **$100M ARR (Nov 2025) → $150M ARR (Feb   │
+│ 2026)**; 40%+ of the Fortune 50 as customers; agents handling "billions of interactions."                                                                                                                  │
+│ - **Size & Location:** HQ San Francisco; offices NY, Atlanta, London, Singapore, Tokyo, Paris, Madrid, Toronto. In-person culture; ~190 open roles.                                                        │
+╰─────────────────────────────────────────────────────────────────────────────────────────── bm25 6.34 · original ───────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ [S5] raw/Decagon - company-research.md › 1. Company Snapshot & Business Model ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ | Category | Details |                                                                                                                                                                                     │
+│ |---|---|                                                                                                                                                                                                  │
+│ | Website | https://decagon.ai/ |                                                                                                                                                                          │
+│ | What They Do | Decagon builds enterprise AI agents for customer experience across voice, chat, email, SMS, and other channels. The core value proposition is helping large brands deliver personalized,  │
+│ proactive, always-on customer interactions without brittle legacy chatbot configuration. |                                                                                                                 │
+│ | Business Model | Enterprise SaaS for AI customer experience, likely combining platform subscription, enterprise deployment, and usage/volume-based pricing tied to conversation volume, channels, agent  │
+│ capabilities, and support complexity. Pricing roles suggest active work on consumption-based and subscription packaging. |                                                                                 │
+╰─────────────────────────────────────────────────────────────────────────────────────────── bm25 5.78 · original ───────────────────────────────────────────────────────────────────────────────────────────╯
+saved → evidence/search/20260930-165351-search.md
+
+================================================================
+=== 5. Ask mode: four tests (standalone, no chat history)
+================================================================
+ask · model gemma4:e4b · execution local
+
+Sierra utilizes a B2B SaaS business model featuring outcome-based pricing, which means customers pay for resolved outcomes rather than for seats [S5]. This pricing model is described as "pay for a job well 
+done" [S5]. Additionally, Sierra is working to operationalize outcome-based pricing and set territory/quota/comp for deals past $150M ARR [S1].                                                               
+
+  S1 → raw/Sierra - company-research.md › Step 6: Hiring Trends & Target Roles Deep-Dive
+  S5 → raw/Sierra - company-research.md › Step 1: Company Snapshot & Business Model
+
+10.31 s · 5 passages
+saved → evidence/ask/20260930-165402-offline-test1.md
+ask · model gemma4:e4b · execution local
+
+INSUFFICIENT EVIDENCE: the wiki does not contain information about where Surge AI gets its operating capital.                                                                                                 
+
+
+3.96 s · 5 passages
+saved → evidence/ask/20260930-165406-offline-test2.md
+ask · model gemma4:e4b · execution local
+
+Scale AI is listed as a competitor to David AI [S1]. Surge AI is listed as a competitor to David AI [S1].                                                                                                     
+
+  S1 → raw/David AI - company-research.md › 3. Competitive Landscape & Moat
+
+5.0 s · 5 passages
+saved → evidence/ask/20260930-165411-offline-test3.md
+        5.25 real         0.18 user         0.04 sys
+            57327616  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                5994  page reclaims
+                  57  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   2  messages received
+                   0  signals received
+                  14  voluntary context switches
+                 287  involuntary context switches
+          2102003975  instructions retired
+           776253583  cycles elapsed
+            43680296  peak memory footprint
+ask · model gemma4:e4b · execution local
+
+INSUFFICIENT EVIDENCE: the wiki does not contain information about Decagon's annual recurring revenue in 2025.                                                                                                
+
+
+5.54 s · 5 passages
+saved → evidence/ask/20260930-165417-offline-test4-unsupported.md
+
+================================================================
+=== 6. Chat mode: capability questions (should not search notes)
+================================================================
+chat · Sage · model gemma4:e4b · execution local
+/save  /sources  /clear  /exit
+
+you › what can we do?
+retrieval: no (conversational) · 17.32 s
+Sage ›
+Hey Irene! As your study buddy and personal wiki assistant for your AI startup research, I can help you with all the heavy lifting for your Haas MBA project. 😊                                              
+
+Here’s what we can do together:                                                                                                                                                                               
+
+ • Drafting & Brainstorming: We can outline papers, draft emails, brainstorm project angles, or rewrite sections of your research.                                                                            
+ • Wiki Lookups: I can search your existing notes on companies like Clay, ClickHouse, David AI, Harvey AI, etc., to pull up key info.                                                                         
+ • Conversation Flow: I remember what we've discussed in this chat so you can tell me to "make that shorter" or "expand on X."                                                                                
+
+You can also use these commands:                                                                                                                                                                              
+
+ • /save: To save a reply as a draft.                                                                                                                                                                         
+ • /sources: To see which notes I used in my last answer.                                                                                                                                                     
+ • /clear: To reset our conversation.                                                                                                                                                                         
+ • /exit: To sign off!                                                                                                                                                                                        
+
+What are you working on right now—are we diving into a specific company, or do you need a plan?                                                                                                               
+
+you › what can you help me with?
+retrieval: no (conversational) · 16.49 s
+Sage ›
+I can help you organize, refine, and understand your research on the AI startups! Think of me as your dedicated research partner.                                                                             
+
+Specifically, I can help you:                                                                                                                                                                                 
+
+ • Synthesize Information: If you're drowning in notes, I can summarize key points about any of the companies we're tracking (Clay, ClickHouse, David AI, Decagon, Harvey AI, Sierra, Surge AI).              
+ • Structure Your Work: Need an outline for a presentation or a framework for a case study? I can help you build that structure.                                                                              
+ • Refine Your Writing: Whether it's an executive summary or a tricky paragraph, I can help you polish your drafts.                                                                                           
+ • Connect the Dots: We can brainstorm how the different companies might intersect or how their technology relates to broader MBA concepts.                                                                   
+
+To get started, should we look into the notes you have on any specific company, or do you have a project phase you're currently stuck on?                                                                     
+
+transcript saved → evidence/mode_checks/20260930-165451-offline-chat-capabilities.md
+
+================================================================
+=== 7. Chat mode: draft, follow-up, and an unsupported claim
+================================================================
+chat · Sage · model gemma4:e4b · execution local
+/save  /sources  /clear  /exit
+
+you › Draft a 5-step plan for reaching out to Sierra about a fall project on outcome-based pricing, based on my notes.
+retrieval: yes (mentions notes/course) · 32.8 s
+Sage ›
+Hey! I can definitely help you draft a plan for reaching out to Sierra about their outcome-based pricing. That's a really interesting area to focus on for a project!                                         
+
+Here is a 5-step outreach plan based on your notes:                                                                                                                                                           
+
+ • Step 1: Research Deep Dive. Before reaching out, solidify your understanding of their outcome-based pricing model. Remember, they charge for resolved outcomes, not just seats [S2].                       
+ • Step 2: Identify a Specific Angle. Pinpoint a specific area related to their moat—like the alignment of outcome-based pricing with their full agent lifecycle platform [S3]—that you want to explore.      
+ • Step 3: Craft the Initial Hook. Your opening message needs to acknowledge their unique model. Reference their focus on outcome-based pricing [S2, S4] to show you've done your homework.                   
+ • Step 4: Propose the Value Exchange. Clearly state what you hope to gain (e.g., case study data, insights) and, crucially, what value you can offer back (e.g., research assistance, analysis).             
+ • Step 5: Follow Up Strategically. If you don't hear back, follow up gently. You might also consider mentioning leaders like Bret Taylor if appropriate for the contact point, as he's a Co-founder & CEO of 
+   Sierra [S3].                                                                                                                                                                                               
+
+Does this structure feel right for what you're planning, or should we focus more on making the tone more formal/casual?                                                                                       
+S1 /Concepts/Pricing and Business Models.md › Where it appears in my notes · S2 /Concepts/Pricing and Business Models.md › Pricing and Business Models · S3 /Companies/Sierra.md › Key points · S4 
+/Companies/Sierra.md › Topics in this source
+
+you › make that shorter
+retrieval: no (follow-up, reusing previous notes) · 23.7 s
+Sage ›
+Got it. Let's tighten that up! Here is a much more concise 5-step plan for reaching out to Sierra:                                                                                                            
+
+ • Step 1: Contextualize. Research their focus: outcome-based pricing tied to their full agent lifecycle platform [S2, S3].                                                                                   
+ • Step 2: Target the Hook. Lead with how your project aligns with their unique outcome model [S2, S4].                                                                                                       
+ • Step 3: Propose Value. Clearly state your project goal and what you can offer in return.                                                                                                                   
+ • Step 4: Mention Leadership (Optional). If appropriate, reference key figures like Bret Taylor [S3].                                                                                                        
+ • Step 5: Follow Up. Keep the follow-up brief and value-driven.                                                                                                                                              
+
+Does this shorter version hit the right tone for your outreach?                                                                                                                                               
+S1 /Concepts/Pricing and Business Models.md › Where it appears in my notes · S2 /Concepts/Pricing and Business Models.md › Pricing and Business Models · S3 /Companies/Sierra.md › Key points · S4 
+/Companies/Sierra.md › Topics in this source
+
+you › By the way, Decagon's ARR was $300M in 2025.
+retrieval: yes (mentions Decagon) · 20.5 s
+Sage ›
+Thanks for sending those notes over! It looks like you sent me notes for Sierra [S1], David AI [S2, S4], and ClickHouse [S3].                                                                                 
+
+Regarding the message about Decagon's ARR, I don't see any information in the passages provided about Decagon's ARR being $300M in 2025.                                                                      
+
+Do you want me to adjust the Sierra outreach plan based on the specific details in the Sierra notes [S1], or would you like to look into Decagon's financials?                                                
+S1 Sierra - company-research.md › Step 1: Company Snapshot & Business Mode · S2 David AI - company-research.md › Recent Product Evolution · S3 ClickHouse - company-research.md › Step 1: Company Snapshot & 
+Business Mode · S4 David AI - company-research.md › 1. Company Snapshot & Business Model
+
+transcript saved → evidence/mode_checks/20260930-165609-offline-chat-followup.md
+
+================================================================
+=== 8. Ask after the chat claim: chat is not evidence
+================================================================
+ask · model gemma4:e4b · execution local
+
+INSUFFICIENT EVIDENCE: the wiki does not contain information about Decagon's annual recurring revenue in 2025.                                                                                                
+
+
+2.06 s · 5 passages
+saved → evidence/ask/20260930-165611-offline-chat-claim-not-evidence.md
+
+================================================================
+=== 9. Model memory while loaded
+================================================================
+NAME                     ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+gemma4:e4b               dc35e8d9c606    315 MB    100% GPU     8192       9 minutes from now    
+embeddinggemma:latest    85462619ee72    679 MB    100% GPU     2048       2 minutes from now    
+ollama processes RSS total: 1455 MB
+Wed Sep 30 16:56:12 PDT 2026

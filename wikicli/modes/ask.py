@@ -47,7 +47,11 @@ def run(question: str, name: str | None = None) -> dict:
         console.print(f"[red]⚠ cites passages that were not provided: {c['invalid']}[/red]")
     if c["uncited_answer"]:
         console.print("[yellow]⚠ answer has no citations — treat as unsupported[/yellow]")
-    console.print(f"\n[dim]{result['stats']['seconds']} s · {len(result['passages'])} passages[/dim]")
+    if "BM25 keyword only" in result["retrieval"]:
+        console.print("[bold red]⚠ semantic search unavailable: retrieval fell back to keywords only; "
+                      "re-run ./wiki ingest vault/raw[/bold red]")
+    console.print(f"\n[dim]{result['stats']['seconds']} s · {len(result['passages'])} passages · "
+                  f"retrieval: {result['retrieval']}[/dim]")
     path = evidence.save("ask", result, name=name or "ask")
     console.print(f"[dim]saved → {path}[/dim]")
     return result

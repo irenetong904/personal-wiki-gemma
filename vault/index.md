@@ -4,7 +4,7 @@ Landing page for my AI-startup company research (Haas MBA, Fall 2026 targeting).
 
 ## Companies
 
-- [[Clay]] — Clay is a GTM data and agentic-automation platform that combines data from over 200 providers with AI research agents to automate prospecting, enrichment, scoring, and outreach.
+- [[Clay]] — Clay is a GTM data and agentic-automation platform that helps GTM teams automate prospecting, enrichment, scoring, and outreach.
 - [[ClickHouse]] — ClickHouse is a leading open-source, column-oriented OLAP database used for real-time analytics at petabyte scale.
 - [[David AI]] — David AI positions itself as the first audio data research lab, building the data layer required by frontier AI teams for speech, voice-agent, and multimodal AI.
 - [[Decagon]] — Decagon is positioning itself as an enterprise "AI concierge" platform for customer experience, moving beyond being just a chatbot vendor.
