@@ -5,8 +5,14 @@ unchanged research notes into a linked Obsidian wiki with **local Gemma 4 E4B**,
 **chat** (personal assistant), **ask** (grounded, cited answers), and **search** (original passages, no model).
 Everything runs offline on a MacBook Air M4.
 
-**Result:** in the official offline run, all four ask-mode tests passed: three grounded, cited answers and one
-insufficient-evidence refusal. All chat and search mode checks passed, with two documented caveats. Assessment of every test: **[`evals/RESULTS.md`](evals/RESULTS.md)**.
+**Result:** in the official offline run (run 3, final code), all four ask-mode tests passed: three grounded, cited
+answers and one insufficient-evidence refusal. All chat and search mode checks also passed.
+
+Testing found and fixed two real harness bugs, and the failing runs are kept as evidence:
+- **Fabricated chat citations**, found by a hand-typed test.
+- **A silent fallback to keyword-only search**, found by offline run 2.
+
+Assessment of every test and the full run history: **[`evals/RESULTS.md`](evals/RESULTS.md)**.
 
 | Quick links | |
 |---|---|
@@ -15,9 +21,9 @@ insufficient-evidence refusal. All chat and search mode checks passed, with two 
 | Obsidian vault | [`vault/`](vault/) · landing page [`vault/index.md`](vault/index.md) · source catalog [`data/source_catalog.json`](data/source_catalog.json) |
 | Test set (written before testing) | [`evals/questions.md`](evals/questions.md) |
 | **Results + assessments** | [`evals/RESULTS.md`](evals/RESULTS.md) |
-| Ask-mode evidence cards (offline) | [Test 1](evidence/ask/20260930-160154-offline-test1.md) · [Test 2](evidence/ask/20260930-160201-offline-test2.md) · [Test 3](evidence/ask/20260930-160209-offline-test3.md) · [Test 4 (unsupported)](evidence/ask/20260930-160215-offline-test4-unsupported.md) |
-| Chat / search mode checks (offline) | [chat capabilities](evidence/mode_checks/20260930-160253-offline-chat-capabilities.md) · [chat follow-up](evidence/mode_checks/20260930-160403-offline-chat-followup.md) · [chat claim ≠ evidence](evidence/ask/20260930-160405-offline-chat-claim-not-evidence.md) · [search](evidence/search/20260930-160146-search.md) · [errors with model stopped](evidence/offline/no-model-checks.log) |
-| Offline demonstration | [terminal log](evidence/offline/offline-run-20260930-160030.log) · [screen recording (4 min)](evidence/offline/offline-demo.mp4) |
+| Ask-mode evidence cards (offline) | [Test 1](evidence/ask/20261001-085210-offline-test1.md) · [Test 2](evidence/ask/20261001-085216-offline-test2.md) · [Test 3](evidence/ask/20261001-085224-offline-test3.md) · [Test 4 (unsupported)](evidence/ask/20261001-085230-offline-test4-unsupported.md) |
+| Chat / search mode checks (offline) | [chat capabilities](evidence/mode_checks/20261001-085259-offline-chat-capabilities.md) · [chat follow-up](evidence/mode_checks/20261001-085410-offline-chat-followup.md) · [chat claim ≠ evidence](evidence/ask/20261001-085412-offline-chat-claim-not-evidence.md) · [search](evidence/search/20261001-085202-search.md) · [errors with model stopped](evidence/offline/no-model-checks.log) |
+| Offline demonstration | [terminal log](evidence/offline/offline-run-20261001-085052.log) · [screen recording (4 min)](evidence/offline/offline-demo.mp4) |
 | Obsidian screenshots | [`evidence/screenshots/`](evidence/screenshots/) (see §5) |
 | Wiki review + re-ingestion | [review log](evidence/wiki-review/REVIEW.md) · [duplicate check](evidence/measurements/reingest-check.log) |
 | Retrieval evaluations (v1 → v2d) | [`evidence/search/`](evidence/search/) (see §5) |
@@ -76,14 +82,14 @@ in the original (`[[raw/Sierra - company-research.md#Step 1 Company Snapshot & B
 ### Measured on this machine
 | Measurement | Value | How measured |
 |---|---|---|
-| Ollama memory while Gemma is loaded | **4.6 GB peak** during full ingest; 4.5 GB with Gemma + EmbeddingGemma loaded after the offline run | summed RSS of the Ollama processes, sampled every 2 s ([ingest log](evidence/measurements/ingest-run2.log), [offline log](evidence/offline/offline-run-20260930-160030.log) step 9). `ollama ps` reports only 279 MB because the weights are memory-mapped, so it understates the footprint |
+| Ollama memory while Gemma is loaded | **4.6 GB peak** during full ingest; 4.5 GB with Gemma + EmbeddingGemma loaded after the offline run | summed RSS of the Ollama processes, sampled every 2 s ([ingest log](evidence/measurements/ingest-run2.log), [offline log](evidence/offline/offline-run-20261001-085052.log) step 9). `ollama ps` reports only 279 MB because the weights are memory-mapped, so it understates the footprint |
 | Harness (Python CLI) memory | 60–75 MB peak | `/usr/bin/time -l` max RSS |
 | Cold model load | 34.6 s (first answer 37.4 s) | Ollama `load_duration` |
 | **Ask answer latency (warm, offline)** | **5.6–8.0 s** for ≈1,000–1,230 prompt tokens and 28–71 output tokens | [offline evidence cards](evals/RESULTS.md) |
 | Generation speed | ≈16.6 tokens/s (100% GPU) | Ollama `eval_count / eval_duration` |
 | Thinking mode on vs off | 15.5 s vs 2.4 s for the same one-sentence answer | test call, same prompt |
 | **Full ingestion, 7 sources** | **565 s (9.4 min)**: 7 summaries + theme consolidation + 5 concept notes + embeddings | `/usr/bin/time` ([log](evidence/measurements/ingest-run2.log)) |
-| Ingest one source offline (`--force`, includes cold load) | 74.5 s | offline log, step 3 |
+| Ingest one source offline (`--force`, includes cold load) | 44–75 s across the three offline runs (69.7 s in run 3) | offline logs, step 3 |
 | Re-ingest with nothing changed | 9 s, no Gemma calls | [duplicate check](evidence/measurements/reingest-check.log) |
 | Chat turn | 11–35 s (replies are long) | offline chat transcripts |
 
@@ -268,19 +274,23 @@ Both were fixed, and all four tests were rerun.
 ### Chat / search mode checks (same offline run)
 | Check | Result |
 |---|---|
-| `wiki search "outcome-based pricing"` | original passages with paths and scores, **no generated answer** ([card](evidence/search/20260930-160146-search.md)); also works with Ollama stopped (BM25 fallback, [log](evidence/offline/no-model-checks.log)) |
-| chat: "what can we do?", "what can you help me with?" | `retrieval: no`; accurate capabilities and commands; no refusal ([transcript](evidence/mode_checks/20260930-160253-offline-chat-capabilities.md)) |
-| chat: draft a 5-step plan "based on my notes" → "make that shorter" | first turn `retrieval: yes` with citations; follow-up `retrieval: no`, shortened from the conversation ([transcript](evidence/mode_checks/20260930-160403-offline-chat-followup.md)) |
-| chat claim "Decagon's ARR was $300M" → standalone `ask` | chat labeled it as user-provided and not in the wiki; ask still answered **INSUFFICIENT EVIDENCE** ([card](evidence/ask/20260930-160405-offline-chat-claim-not-evidence.md)) |
+| `wiki search "outcome-based pricing"` | original passages with paths and scores, **no generated answer** ([card](evidence/search/20261001-085202-search.md)); also works with Ollama stopped (BM25 fallback, [log](evidence/offline/no-model-checks.log)) |
+| chat: "what can we do?", "what can you help me with?" | `retrieval: no`; accurate capabilities and commands; no refusal ([transcript](evidence/mode_checks/20261001-085259-offline-chat-capabilities.md)) |
+| chat: draft a 5-step plan "based on my notes" → "make that shorter" | first turn `retrieval: yes` with citations; follow-up `retrieval: no`, shortened from the conversation ([transcript](evidence/mode_checks/20261001-085410-offline-chat-followup.md)) |
+| chat claim "Decagon's ARR was $300M" → standalone `ask` | chat searched the Decagon notes and said "I don't see that specific ARR figure in the notes provided"; ask still answered **INSUFFICIENT EVIDENCE** ([card](evidence/ask/20261001-085412-offline-chat-claim-not-evidence.md)) |
 | **hand-typed chat** (after the offline run) | ❌ first attempt: "Give me a 3-bullet summary of Sierra from my notes" skipped retrieval ("bullet" matched the edit rule), and Gemma **fabricated `[S1]`–`[S3]` citations** ([screenshot](evidence/screenshots/07-chat-interactive-BUG-fabricated-citations.png), [transcript](evidence/mode_checks/20260930-163956-chat.md)). ✅ after the fix: `retrieval: yes`, real passages, valid labels, and the follow-up reuses them ([re-test](evidence/mode_checks/20260930-164202-fix-check-chat-bullet.md)). Details in [RESULTS](evals/RESULTS.md#hand-typed-chat-test-after-the-offline-run-a-failure-found-and-fixed) |
 | error handling | model stopped → `ask`/`chat` exit 3 with the fix; missing file → exit 4; `--mode online` → "not configured" ([log](evidence/offline/no-model-checks.log)) |
 
 ### Offline demonstration
-The [terminal log](evidence/offline/offline-run-20260930-160030.log) and [screen recording](evidence/offline/offline-demo.mp4)
-(4 min, Wi‑Fi and hotspot off) show the whole sequence. The script is [`evals/run_offline.sh`](evals/run_offline.sh).
+The script [`evals/run_offline.sh`](evals/run_offline.sh) was run three times with Wi‑Fi and hotspot off:
+- **Official run 3** (final code): [terminal log](evidence/offline/offline-run-20261001-085052.log).
+- **Run 1**: [screen recording](evidence/offline/offline-demo.mp4) (4 min) and [log](evidence/offline/offline-run-20260930-160030.log).
+- **Run 2**: [log](evidence/offline/offline-run-20260930-165306.log). Its Q2 failure is explained in [RESULTS](evals/RESULTS.md#offline-run-history-all-logs-kept).
+
+Each run shows this sequence:
 1. `INTERNET: UNREACHABLE (offline confirmed)`, device and model identity, model unloaded.
 2. `./wiki --help`.
-3. **Offline ingestion** of `raw/Clay…` (Gemma rewrote the note, 74.5 s), then `./wiki check` (0 problems).
+3. **Offline ingestion** of `raw/Clay…` (Gemma rewrote the note), then `./wiki check` (0 problems, including the retrieval index).
 4. Search, the four ask tests, both chat checks, and the chat-claim check.
 5. Memory.
 
@@ -355,8 +365,16 @@ Fixes:
 Lesson: scripted tests share the author's phrasing. One real user message exercised a path none of them did.
 
 **Other observed limitations:**
-- Chat follows the "flag unverified user claims" rule inconsistently. The ask/chat boundary is enforced by the harness,
-  not the prompt.
+- **Third real failure: the harness degraded silently (offline run 2).**
+  - **What happened:** rebuilding the embeddings during ingest hit one transient Ollama error under memory pressure
+    (1.5 GiB free). The harness deleted the vectors and quietly used BM25 only, so the paraphrased Q2 lost its passage.
+    Gemma's refusal was correct for that input.
+  - **Fix:** batched embedding with retries, a loud warning, the retrieval method printed on every `ask`, and
+    `./wiki check` validating the index.
+  - **Result:** run 3 passed. A fallback is fine; a *silent* fallback is a bug.
+- Retrieved notes are placed inside the user's chat turn, so Sage sometimes says the user "pasted" them. A separate
+  system message for retrieved notes would fix this. Flagging unverified user claims depends partly on the model; the
+  ask/chat boundary itself is enforced by the harness.
 - The chat retrieval router is still rule-based, so an unusual phrasing about the notes may skip retrieval. The citation
   guard now makes this visible instead of silent. A small classifier call, or always retrieving and letting the model
   ignore irrelevant passages, would be the next step.

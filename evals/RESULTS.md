@@ -1,8 +1,15 @@
 # Test results: official offline run
 
-- **Run:** 2026-09-30 16:00–16:04 PDT, Wi‑Fi and hotspot off, `INTERNET: UNREACHABLE (offline confirmed)`.
-  Full log: [`evidence/offline/offline-run-20260930-160030.log`](../evidence/offline/offline-run-20260930-160030.log) ·
-  screen recording: [`evidence/offline/offline-demo.mp4`](../evidence/offline/offline-demo.mp4)
+- **Official run (run 3):** 2026-10-01 08:50–08:55 PDT, Wi‑Fi and hotspot off, `INTERNET: UNREACHABLE (offline confirmed)`,
+  final code. Full log: [`evidence/offline/offline-run-20261001-085052.log`](../evidence/offline/offline-run-20261001-085052.log).
+  The screen recording [`offline-demo.mp4`](../evidence/offline/offline-demo.mp4) shows run 1 (same script and questions).
+
+### Offline run history (all logs kept)
+| Run | Log | Code | Ask results | What it revealed |
+|---|---|---|---|---|
+| 1 (recorded) | [`…20260930-160030.log`](../evidence/offline/offline-run-20260930-160030.log) | before the chat fix | 4/4 pass | scripted chat checks passed; a later **hand-typed** chat found fabricated citations (see below) |
+| 2 | [`…20260930-165306.log`](../evidence/offline/offline-run-20260930-165306.log) | chat fix | **3/4: Q2 failed** | embedding rebuild got a transient Ollama error (1.5 GiB free) and the harness **silently** fell back to BM25, so the funding passage wasn't retrieved ([card](../evidence/ask/20260930-165406-offline-test2.md)). Fixed: batched embedding + retries, loud warning, `ask` shows the retrieval method, `./wiki check` flags missing vectors |
+| **3 (official)** | [`…20261001-085052.log`](../evidence/offline/offline-run-20261001-085052.log) | final | **4/4 pass**, all with hybrid retrieval | `check`: 0 problems including the retrieval index; all mode checks pass |
 - **Model:** `gemma4:e4b` (Gemma 4 E4B, Q4_K_M) via Ollama 0.34.4, `execution: local`, thinking off, temperature 0.1
 - **Retrieval:** hybrid BM25 + `embeddinggemma` (weighted RRF, dense weight 2.0), originals in `vault/raw/` only, top 5
 - **Data:** 7 redacted company-research files, 197 indexed passages
@@ -13,10 +20,12 @@
 
 | # | Question | Expected passage retrieved? | Answer correct? | Citations check out? | Latency |
 |---|---|---|---|---|---|
-| 1 | What is Sierra's pricing model? | ✅ S2 = Sierra Step 1 | ✅ | ✅ | 8.0 s |
-| 2 | Where does Surge AI get its operating capital? *(paraphrase)* | ✅ S3 = Surge Step 1 ("entirely bootstrapped") | ✅ | ✅ | 6.2 s |
-| 3 | Which AI data companies list Scale AI as a competitor? *(2 sources)* | ✅ S1 = David AI §3, S2 = Surge Step 3 | ✅ | ✅ | 8.0 s |
-| 4 | What was Decagon's annual recurring revenue in 2025? *(unsupported)* | n/a; Decagon funding/valuation passages retrieved, none mention ARR | ✅ `INSUFFICIENT EVIDENCE` | ✅ none cited | 5.6 s |
+| 1 | What is Sierra's pricing model? | ✅ S2 = Sierra Step 1 | ✅ | ✅ | 7.6 s |
+| 2 | Where does Surge AI get its operating capital? *(paraphrase)* | ✅ S3 = Surge Step 1 ("entirely bootstrapped") | ✅ | ✅ | 5.8 s |
+| 3 | Which AI data companies list Scale AI as a competitor? *(2 sources)* | ✅ S1 = David AI §3, S2 = Surge Step 3 | ✅ | ✅ | 7.7 s |
+| 4 | What was Decagon's annual recurring revenue in 2025? *(unsupported)* | n/a; Decagon funding/valuation passages retrieved, none mention ARR | ✅ `INSUFFICIENT EVIDENCE` | ✅ none cited | 5.2 s |
+
+Retrieved passages and scores were identical to run 1 for all four questions.
 
 Every answer came from a fresh process with no chat history. Prompts were about 1,000–1,230 tokens (rules + 5
 passages + question).
@@ -26,7 +35,7 @@ passages + question).
 ## Test 1: direct question, one source
 **Question:** What is Sierra's pricing model?
 **Expected:** `raw/Sierra - company-research.md` › Step 1: "B2B SaaS with **outcome-based pricing** ("pay for a job well done" — pay for resolved outcomes, not seats)."
-**Card:** [`evidence/ask/20260930-160154-offline-test1.md`](../evidence/ask/20260930-160154-offline-test1.md)
+**Card:** [`evidence/ask/20261001-085210-offline-test1.md`](../evidence/ask/20261001-085210-offline-test1.md)
 
 | | Path › section | bm25 / cosine |
 |---|---|---|
@@ -44,7 +53,7 @@ Retrieval note: BM25 alone ranked Step 6 higher because a job title contains "Pr
 ## Test 2: answerable, phrased differently from the source
 **Question:** Where does Surge AI get its operating capital?
 **Expected:** `raw/Surge AI - company-research.md` › Step 1: "Profitable from day one; entirely bootstrapped (no VC)" / "Zero external funding."
-**Card:** [`evidence/ask/20260930-160201-offline-test2.md`](../evidence/ask/20260930-160201-offline-test2.md)
+**Card:** [`evidence/ask/20261001-085216-offline-test2.md`](../evidence/ask/20261001-085216-offline-test2.md)
 
 | | Path › section | bm25 / cosine |
 |---|---|---|
@@ -66,7 +75,7 @@ model failure. The fix was the dense weight of 2.0 (see the sweep in `evidence/s
 ## Test 3: connects two sources
 **Question:** Which AI data companies list Scale AI as a competitor?
 **Expected:** `raw/David AI - company-research.md` › 3. Competitive Landscape (Scale AI row) **and** `raw/Surge AI - company-research.md` › Step 3 ("Competitors: Scale AI (Meta-backed, ~$29B) …")
-**Card:** [`evidence/ask/20260930-160209-offline-test3.md`](../evidence/ask/20260930-160209-offline-test3.md)
+**Card:** [`evidence/ask/20261001-085224-offline-test3.md`](../evidence/ask/20261001-085224-offline-test3.md)
 
 | | Path › section | bm25 / cosine |
 |---|---|---|
@@ -76,11 +85,12 @@ model failure. The fix was the dense weight of 2.0 (see the sweep in `evidence/s
 | S4 | raw/Decagon › 3. Competitive Landscape & Moat | 8.71 / 0.487 |
 | S5 | raw/David AI › 1. Company Snapshot | 9.37 / 0.394 |
 
-**Answer (Gemma):** "Scale AI is listed as a competitor by David AI and Surge AI [S1][S2]. David AI differentiates itself by being audio-native and founded by former Scale operators/engineers [S1]. Surge AI lists Scale AI among its competitors, alongside Mercor, Turing, Invisible Technologies, and Appen/Labelbox [S2]."
+**Answer (Gemma, run 3):** "Scale AI is listed as a competitor by David AI and Surge AI [S1][S2]. David AI differentiates itself by being audio-native and founded by former Scale operators/engineers [S1]. Surge AI competes with Scale AI, which is noted as being Meta-backed and having ~$29B [S2]."
 
 **Assessment: pass.** Each company's claim cites that company's own file.
 - The David AI differentiation matches its Scale AI row.
-- Surge's competitor list matches Step 3; the source marks Appen/Labelbox as "legacy", which the answer leaves out (acceptable).
+- "Meta-backed … ~$29B" is reported exactly as the Surge passage writes it, **without naming a metric**. This is the behavior the numeric-claim rule (below) was added for.
+- Run 1 gave an equally correct variant: it listed Surge's other competitors (Mercor, Turing, …) instead of the figure.
 
 **Earlier failure (kept as evidence):** a dry run
 ([`dryrun2-test3`](../evidence/ask/20260929-231249-dryrun2-test3.md)) said Scale AI has "a **revenue** of approximately
@@ -91,7 +101,7 @@ report numbers as written and do not name the metric unless the passage does. Al
 ## Test 4: unsupported question
 **Question:** What was Decagon's annual recurring revenue in 2025?
 **Expected:** no source states Decagon's ARR or revenue. The correct behavior is an explicit insufficient-evidence statement.
-**Card:** [`evidence/ask/20260930-160215-offline-test4-unsupported.md`](../evidence/ask/20260930-160215-offline-test4-unsupported.md)
+**Card:** [`evidence/ask/20261001-085230-offline-test4-unsupported.md`](../evidence/ask/20261001-085230-offline-test4-unsupported.md)
 
 Retrieved (plausible but non-answering context):
 
@@ -111,18 +121,18 @@ $4.5B valuation into an ARR figure, and it did not borrow another company's numb
 
 ---
 
-## Mode checks (same offline run)
+## Mode checks (official run 3, final code)
 
 | Check | Evidence | Expected | Actual | Result |
 |---|---|---|---|---|
-| Search shows passages only | [`search card`](../evidence/search/20260930-160146-search.md), log step 4 | original passages + paths, no generated answer, no model call | 5 original passages with path › section and scores; no answer text | ✅ |
+| Search shows passages only | [`search card`](../evidence/search/20261001-085202-search.md), log step 4 | original passages + paths, no generated answer, no model call | 5 original passages with path › section and scores; no answer text | ✅ |
 | Search works without the model | [`search card with Ollama stopped`](../evidence/search/20260929-231718-search.md), [`no-model log`](../evidence/offline/no-model-checks.log) | passages still returned | "BM25 keyword only (embeddings unavailable)" + passages | ✅ |
-| Chat: "what can we do?" | [`offline-chat-capabilities`](../evidence/mode_checks/20260930-160253-offline-chat-capabilities.md) | capabilities, no notes search, no refusal | `retrieval: no (conversational)`; lists brainstorm, drafting, wiki search, the 7 companies, and `/save /sources /clear /exit` | ✅ |
-| Chat: "what can you help me with?" | same | same | `retrieval: no`; analyze/compare, structure, synthesize, draft | ✅ |
-| Chat: draft a plan "based on my notes" | [`offline-chat-followup`](../evidence/mode_checks/20260930-160403-offline-chat-followup.md) | retrieves, cites notes, labels ideas as suggestions | `retrieval: yes (mentions notes)`; 4 passages (Sierra note + raw Step 6); cites [S#] | ✅ |
-| Chat: "make that shorter" | same | uses the conversation, no new search | `retrieval: no (follow-up)`; condensed version of the same 5-step plan | ✅ with caveat¹ |
-| Chat: "Decagon's ARR was $300M in 2025." | same | treat as unverified, do not store as evidence | "…that detail came from you… it won't be in the wiki unless you explicitly tell me to ingest it" | ⚠️ mostly² |
-| Ask after the chat claim | [`offline-chat-claim-not-evidence`](../evidence/ask/20260930-160405-offline-chat-claim-not-evidence.md) | still insufficient evidence | `INSUFFICIENT EVIDENCE…` (the $300M claim is not used) | ✅ |
+| Chat: "what can we do?" | [`offline-chat-capabilities`](../evidence/mode_checks/20261001-085259-offline-chat-capabilities.md) | capabilities, no notes search, no refusal | `retrieval: no (conversational)`; describes drafting, summarizing, wiki lookup, session memory, and the chat commands | ✅ |
+| Chat: "what can you help me with?" | same | same | `retrieval: no (conversational)` | ✅ |
+| Chat: draft a plan "based on my notes" | [`offline-chat-followup`](../evidence/mode_checks/20261001-085410-offline-chat-followup.md) | retrieves, cites notes, labels ideas as suggestions | `retrieval: yes (mentions notes)`; plan labeled **Suggestion:**, every `[S#]` maps to a retrieved passage | ✅ |
+| Chat: "make that shorter" | same | uses the conversation, no new search | `retrieval: no (follow-up, reusing previous notes)`; shorter plan, its `[S#]` labels still refer to the reused passages | ✅ |
+| Chat: "Decagon's ARR was $300M in 2025." | same | treat as unverified, do not store as evidence | `retrieval: yes (mentions Decagon)`: "I don't see that specific ARR figure in the notes provided [S1, S2, S3, S4]" | ✅ with caveat¹ |
+| Ask after the chat claim | [`offline-chat-claim-not-evidence`](../evidence/ask/20261001-085412-offline-chat-claim-not-evidence.md) | still insufficient evidence | `INSUFFICIENT EVIDENCE…` (the $300M claim is not used) | ✅ |
 | Ask with Ollama stopped | [`no-model log`](../evidence/offline/no-model-checks.log) | clear error | `error: local model unavailable … Start it with: brew services start ollama`, exit 3 | ✅ |
 
 ### Hand-typed chat test (after the offline run): a failure found and fixed
@@ -138,14 +148,13 @@ $4.5B valuation into an ARR figure, and it did not borrow another company's numb
 - Notes-based draft: `retrieval: yes`.
 - "make that shorter": reuses the previous passages.
 - "Decagon's ARR was $300M": now `retrieval: yes (mentions Decagon)`, and Sage answers that it doesn't see that ARR figure
-  in passages [S1]–[S4] and calls it unverified. This resolves caveat ² below.
+  in passages [S1]–[S4] and calls it unverified. Before the fix (run 1), this claim was handled only by the persona
+  rule: the reply began "I can incorporate that into our notes", and an earlier dry run simply said "noted".
 
 The scripted offline chat checks never hit this path: their notes request said "based on my notes" and contained no
 edit word. A single hand-typed test found it.
 
-¹ (Before the fix above) the shortened reply reused `[S3]`, `[S4]` from the previous turn. The labels are per-turn and the follow-up turn had no
-new passages, so readers must look at the previous turn's sources (`/sources`).
-² The reply opens with "I can incorporate that into our notes if you'd like", which overstates its abilities (chat cannot write to
-the wiki), but it then states the correct boundary. In the earlier dry run it simply said "noted", even with the persona
-rule. The small model follows this rule inconsistently. The harness boundary (ask never sees chat history) is what
-actually guarantees the separation.
+¹ Caveat (run 3): Sage said the user had "pasted some notes about Decagon". The harness places retrieved passages
+inside the user turn (`prompts.chat_messages`), so the model attributes them to the user. A fix would be a separate
+system message such as "Notes retrieved by the app for this turn". Either way, the ask/chat boundary is enforced by
+the harness (ask never sees chat history), not by the model.

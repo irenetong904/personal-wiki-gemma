@@ -1,0 +1,49 @@
+# ASK evidence card
+
+- **Time:** 2026-10-01T08:54:12
+- **Interaction mode:** ask
+- **Execution:** local
+- **Model:** gemma4:e4b
+- **Latency:** 1.34 s
+
+## Question
+What was Decagon's annual recurring revenue in 2025?
+
+## Retrieved passages
+_Method: hybrid: BM25 + embeddinggemma cosine, reciprocal rank fusion_
+
+**[S1]** `raw/Decagon - company-research.md` › 1. Company Snapshot & Business Model (bm25 3.06, cosine 0.608)
+
+> | Stage & Funding | Series D. Decagon announced $250M led by Coatue and Index Ventures in Jan 2026, tripling valuation to $4.5B in under six months. Public prior rounds include $131M in 2025 and $65M Series B in 2024; approximate total public funding is ~$481M. |
+> | Size & Location | HQ: San Francisco. Ashby board shows 119 open roles across San Francisco, New York, London, Toronto, Australia, and other international markets. Decagon describes itself as in-office and high-velocity. |
+
+**[S2]** `raw/Decagon - company-research.md` › Market Position (bm25 2.54, cosine 0.556)
+
+> Decagon appears to be an enterprise leader / category disruptor in AI customer experience agents. The evidence is strong: $4.5B valuation, 100+ new global enterprise customers in the fiscal year cited in the Series D post, broad public enterprise logos, and a large open-role footprint across Sales, Engineering, Deployment Strategists, Product, and Revenue Operations.
+
+**[S3]** `raw/Decagon - company-research.md` › Broad Operations Sweep (bm25 2.83, cosine 0.531)
+
+> | Revenue / BizOps | Yes | Revenue Strategy & Operations Manager; BizOps & Strategy, Pricing; Deal Desk Operations & Strategy Lead | Capacity planning, international expansion, segmentation, post-sale frameworks, KPIs, pipeline generation, territories, incentives, pricing/packaging, deal structuring, CPQ/deal desk processes, Board reporting. | Sales, Finance, Legal, GTM leadership, executive team, Board. | Decagon is entering a hypergrowth monetization phase and needs operating rigor around pricing AI agents, forecasting demand, and scaling enterprise commercial process. |
+
+**[S4]** `raw/David AI - company-research.md` › 1. Company Snapshot & Business Model (bm25 3.53, cosine 0.327)
+
+> | Stage & Funding | Series B. Public company announcements show $5M seed in Jan 2025, $25M Series A in May 2025, and $50M Series B in Oct 2025. Approximate public total: $80M. Investors include Meritech, NVIDIA, Alt Capital, First Round Capital, Amplify Partners, Y Combinator, BoxGroup, SV Angel, Liquid 2, and others. |
+> | Size & Location | YC profile lists team size of 10, founded in 2024, San Francisco. Some roles list New York as an option. Company site says it is hiring across research, engineering, and operations. |
+
+**[S5]** `raw/Surge AI - company-research.md` › Step 1: Company Snapshot & Business Model (bm25 4.22, cosine 0.284)
+
+> - **What they do:** Human-data company for frontier AI — RLHF/data labeling, **RL environments, evaluations, and an elite expert workforce** that trains and grades the world's top LLMs. "Human intelligence for AGI."
+> - **Business Model:** B2B services + platform; bespoke human-data programs + **off-the-shelf ("OTS") frontier data and RL environments.** **Profitable from day one; entirely bootstrapped (no VC).**
+> - **Stage & Funding:** Founded **2020**. **Zero external funding.** Revenue **>$1B in 2024** (Forbes: $1.2B; The Information first reported), reportedly ~$1.4B run-rate 2025; fielding VC term sheets while staying independent (circulating valuation figures ~$15–30B are **unverified**).
+
+## Answer
+INSUFFICIENT EVIDENCE: the wiki does not contain information about Decagon's annual recurring revenue in 2025.
+
+## Citation check
+- cited: []
+- invalid: []
+- insufficient evidence: True
+
+
+## Assessment
+**PASS (official run 3). The chat-only $300M claim was not used by ask.**
